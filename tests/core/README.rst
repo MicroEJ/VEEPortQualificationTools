@@ -303,7 +303,11 @@ more information about results. The Github repository containing the sources of 
 
 **Configuration**
 
-To run this test, create ``core_portme.h`` and ``core_portme.h`` files to port EEMBC CoreMark and insert the directive line :code:`#define main core_main` into the ``core_portme.h``.
+To run this test:
+
+* Create ``core_portme.h`` and ``core_portme.h`` files to port EEMBC CoreMark.
+* Insert the directive line :code:`#define main core_main` into the ``core_portme.h``.
+* Implement ``X_CORE_BENCHMARK_run(void)`` from ``x_core_benchmark.h``.
 
 **Expected results**
 

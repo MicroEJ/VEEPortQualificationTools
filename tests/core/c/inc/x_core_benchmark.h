@@ -23,7 +23,20 @@
 
 /* public function declaration */
 
+// Symbol to redirect CoreMark main to. Use `#define main core_main`
+// in core_portme.h.
+void core_main(void);
+
 // weak function to implement
+
+/**
+ * @fn bool X_CORE_BENCHMARK_run(void)
+ * @brief This function is called to run the CoreMark benchmark.
+ *
+ * This function should called core_main().
+ *
+ * @return true if the benchmark was run, false otherwise.
+ */
 bool X_CORE_BENCHMARK_run(void);
 
 #ifdef __cplusplus

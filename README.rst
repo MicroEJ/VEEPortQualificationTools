@@ -42,7 +42,7 @@ The following sections give an overview of the Platform Qualification Tools (PQT
 Framework
 ---------
 
-The `framework/` folder contains the infrastructure required to build and run the tests.
+The ``framework/`` folder contains the infrastructure required to build and run the tests.
 
 C infrastructure
 ----------------
@@ -52,6 +52,12 @@ The ``framework/c/`` folders contains the following:
 - Embedded Unit (embUnit) is a unit testing framework used for C tests.
 - CoreMark is a processor benchmark used by the CORE Test Suite.
 - utils provides several utilities used by various C tests
+
+Platform Configuration Additions
+--------------------------------
+
+The ``framework/platform/`` folder contains the MicroEJ Platform Configuration Additions.
+See the `Platform Configuration Additions README <framework/platform/README.rst>`_ for more information.
 
 Test Suites
 -----------

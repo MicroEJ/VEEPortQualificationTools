@@ -45,17 +45,23 @@ double X_RAM_SPEED_getAverageWriteSpeed(void)
     double avrSpeed = 0;
     double counter = 0;
 
+		if (X_RAM_CHECKS_get32bitZoneNumber() != 0)
+		{
+			avrSpeed += X_RAM_SPEED_getWriteSpeed32();
+			counter++;
+		}
 
-    avrSpeed += X_RAM_SPEED_getWriteSpeed32();
-    counter++;
+		if (X_RAM_CHECKS_get16bitZoneNumber() != 0)
+		{
+			avrSpeed += X_RAM_SPEED_getWriteSpeed16();
+			counter++;
+		}
 
-
-    avrSpeed += X_RAM_SPEED_getWriteSpeed16();
-    counter++;
-
-
-    avrSpeed += X_RAM_SPEED_getWriteSpeed8();
-    counter++;
+		if (X_RAM_CHECKS_get8bitZoneNumber() != 0)
+		{
+			avrSpeed += X_RAM_SPEED_getWriteSpeed8();
+			counter++;
+		}
 
 
     if (counter != 0)
@@ -73,15 +79,24 @@ double X_RAM_SPEED_getAverageReadSpeed(void)
     double avrSpeed = 0;
     double counter = 0;
 
+		if (X_RAM_CHECKS_get32bitZoneNumber() != 0)
+		{
+			avrSpeed += X_RAM_SPEED_getReadSpeed32();
+			counter++;
+		}
 
-    avrSpeed += X_RAM_SPEED_getReadSpeed32();
-    counter++;
-
-    avrSpeed += X_RAM_SPEED_getReadSpeed16();
-    counter++;
-
-    avrSpeed += X_RAM_SPEED_getReadSpeed8();
-    counter++;
+		if (X_RAM_CHECKS_get16bitZoneNumber() != 0)
+		{
+			avrSpeed += X_RAM_SPEED_getReadSpeed16();
+			counter++;
+		}
+		
+		
+		if (X_RAM_CHECKS_get8bitZoneNumber() != 0)
+		{
+			avrSpeed += X_RAM_SPEED_getReadSpeed8();
+			counter++;
+		}
 
     if (counter != 0)
     {
@@ -98,16 +113,23 @@ double X_RAM_SPEED_getAverageTransfertSpeed(void)
     double avrSpeed = 0;
     double counter = 0;
 
+		if ( X_RAM_CHECKS_get32bitSourceZone() != NULL) 
+		{
+			avrSpeed += X_RAM_SPEED_getTransfertSpeed32();
+			counter++;
+		}
+		
+		if ( X_RAM_CHECKS_get16bitSourceZone() != NULL) 
+		{
+			avrSpeed += X_RAM_SPEED_getTransfertSpeed16();
+			counter++;
+		}
 
-
-    avrSpeed += X_RAM_SPEED_getTransfertSpeed32();
-    counter++;
-
-    avrSpeed += X_RAM_SPEED_getTransfertSpeed16();
-    counter++;
-
-    avrSpeed += X_RAM_SPEED_getTransfertSpeed8();
-    counter++;
+		if ( X_RAM_CHECKS_get8bitSourceZone() != NULL) 
+		{
+			avrSpeed += X_RAM_SPEED_getTransfertSpeed8();
+			counter++;
+		}
 
 
     if (counter != 0)

@@ -11,6 +11,21 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a Changelog <https://keepachangelog.com/en/1.0.0/>`_, and this project adheres to `Semantic Versioning <https://semver.org/spec/v2.0.0.html>`_.
 
 ------------------
+2.2.0 - 2020-06-24
+------------------
+
+Added
+=====
+
+- MicroEJ Platform Configuration Additions (see `README <framework/platform/README.rst>`_).
+
+Fixed
+=====
+
+- Add missing symbol ``core_main`` and improve the documentation on how to run CoreMark benchmark.
+- Fix speed computation when less than 3 zones are defined
+
+------------------
 2.1.0 - 2020-06-10
 ------------------
 
