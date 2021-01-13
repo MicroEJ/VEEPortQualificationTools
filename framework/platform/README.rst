@@ -8,7 +8,7 @@ This directory contains all required files to properly configure an empty MicroE
 
   .. code-block:: console
    
-     svn checkout https://github.com/MicroEJ/PlatformQualificationTools/trunk/framework/platform/content [path_to_platform_configuration_directory]
+     svn export --force https://github.com/MicroEJ/PlatformQualificationTools/trunk/framework/platform/content [path_to_platform_configuration_directory]
 
 - The ``scripts`` directory contains ready to use console scripts templates to invoke the build and the run of 
   a MicroEJ Firmware using a third party C toolchain or IDE (IAR Embedded Workbench, Keil MDK-ARM, Espressif ESP-IDF toolchain, ...)

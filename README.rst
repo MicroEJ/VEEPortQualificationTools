@@ -9,8 +9,8 @@ Clone this repository with ``git clone --recursive https://github.com/MicroEJ/Pl
 Test Suites Available
 =====================
 
-CORE Test Suite
----------------
+Core Engine Test Suite
+----------------------
 
 The CORE Test Suite contains a C Test Suite and a Java Test Suite. It is the most basic Test Suite to run.
 It ensures MicroEJ Application will run correctly.
@@ -19,13 +19,21 @@ All other Test Suites assume the CORE Test Suite is validated.
 
 See `CORE Readme <tests/core/README.rst>`_
 
-UI Test Suite
--------------
+Graphical User Interface Test Suite
+-----------------------------------
 
 The UI Test Suite is a C Test Suite. It checks the integration of the ``LLDisplay`` API and the tearing signal usage.
 It also provides indication about the minimum draw time allowed to display animations at a given framerate.
 
 See `UI Readme <tests/ui/README.rst>`_
+
+Filesystem Test Suite
+---------------------
+
+The FS Test Suite is a Java Test Suite. It checks the integration of the ``LLFS*`` APIs over a C File System library.
+
+See `FS Readme <tests/fs/README.rst>`_
+
 
 Platform Qualification Tools Overview
 =====================================
@@ -58,6 +66,7 @@ Platform Configuration Additions
 
 The ``framework/platform/`` folder contains the MicroEJ Platform Configuration Additions.
 See the `Platform Configuration Additions README <framework/platform/README.rst>`_ for more information.
+For licenses management, please refer to `License <https://docs.microej.com/en/latest/overview/licenses.html>`_ .
 
 Test Suites
 -----------
@@ -100,5 +109,5 @@ BSP. No specific unit test framework is used, each test describes how it
 works.
 
 ..
-   Copyright 2019-2020 MicroEJ Corp. All rights reserved.
+   Copyright 2019-2021 MicroEJ Corp. All rights reserved.
    Use of this source code is governed by a BSD-style license that can be found with this software.

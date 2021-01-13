@@ -1,1 +1,2 @@
-framework/platform/content/dropins/workbenchExtension_launchScriptFramework.jar
+framework/platform/content/build/module/module-dropins/workbenchExtension_launchScriptFramework.jar
+framework/platform/content/build/module/module-dropins/tools/license-checker.jar

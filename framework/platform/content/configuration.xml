@@ -2,112 +2,18 @@
 <!--
 	ANT
 
-	Copyright 2015-2020 MicroEJ Corp. All rights reserved.
+	Copyright 2018-2020 MicroEJ Corp. All rights reserved.
 	Use of this source code is governed by a BSD-style license that can be found with this software.
+
 -->
-<project name="configuration" default="howto">
+<project name="configuration">
 
 	<!--
-		Defines some properties used in this configuration project 
-		(in ant and properties files)
+		Script called by MicroEJ Workbench when building the platform.
 	-->
-	<dirname file="${ant.file.configuration}" property="project.dir"/>
-	<property name="workspace" location="${project.dir}/.."/>
-	<basename file="${project.dir}" suffix="-configuration" property="project.prefix"/>
-
-	<!-- =======================================================
-		Targets to customize the platform creation
-	======================================================= -->
 	
-	<!--
-		This target will be called just before the platform creation.
-		You can prepare here some temporary files and directories.
-	-->
-	<target name="platform/initialization/user" extensionOf="platform/initialization">
-		
-	</target>
+	<!-- Import Platform Configuration Additions build file -->
+	<dirname file="${ant.file.configuration}" property="configuration.dir"/>
+	<import file="${configuration.dir}/build/platform/platform.ant"/>
 	
-	
-	<!--
-		This target will be called during platform creation.
-		You can add here some specific work to build a specific Java library,
-		to customize a BSP header file, etc.
-	-->
-	<target name="platform/customization/user" extensionOf="platform/customization">
-		
-	</target>
-	
-	<!--
-		This target will be called during platform finalization.
-		You can add here some specific work to customize your BSP.
-	-->
-	<target name="platform/finalization/user" extensionOf="platform/finalization">
-		
-	</target>
-	
-	<!-- 
-		This target will be called after the platform creation.
-		You can delete here your temporary files and directories.
-	-->
-	<target name="platform/clean/user" extensionOf="platform/clean">
-		
-	</target>
-	
-	<!-- 
-		Helpful target
-	-->
-	<target name="howto">
-		<echo message="This script file is not the entry point to build the Platform."/>
-		<echo message="Please follow the steps described in the documentation."/>
-	</target>
-	
-	<!-- 
-		Update workbench extension and generate 'deployInBSP.properties' according to 'bsp/bsp.properties' configuration.
-		Overrides the default architecture script, after the dropins are copied in order to get the compatible 'workbenchExtension_launchScriptFramework.jar'
-	-->
-	<target name="bsp/workbenchExtension/augment" extensionOf="platform/finalization" depends="bsp/workbenchExtension/augment/init,bsp/workbenchExtension/augment/app,bsp/workbenchExtension/augment/lib,bsp/workbenchExtension/augment/inc,bsp/workbenchExtension/augment/script,bsp/workbenchExtension/augment/root">
-		<jar destfile="${jpf.dir}/workbenchExtension_launchScriptFramework.jar" update="true">
-			<fileset file="${deploy.bsp.properties.file.location}"/>
-		</jar>
-	</target>
-	
-	<target name="bsp/workbenchExtension/augment/init">
-		<!-- When using these platform additions scripts, override and remove legacy 'deploy.bsp.output.dir' generation-->
-		<property name="deploy.bsp.properties.file.location" location="${jpf.dir}/scripts/deployInBSP.properties"/>	
-		<propertyfile file="${deploy.bsp.properties.file.location}">
-			<entry key="deploy.bsp.output.dir" operation="del"/>
-			<entry key="deploy.bsp.available" value="true"/>
-		</propertyfile>		
-	</target>
-	
-	<target name="bsp/workbenchExtension/augment/app" if="bsp.microejapp.relative.dir">
-		<propertyfile file="${deploy.bsp.properties.file.location}">
-			<entry key="deploy.bsp.microejapp.relative.dir" value="${bsp.microejapp.relative.dir}"/>
-		</propertyfile>		
-	</target>
-	
-	<target name="bsp/workbenchExtension/augment/lib" if="bsp.microejlib.relative.dir">
-		<propertyfile file="${deploy.bsp.properties.file.location}">
-			<entry key="deploy.bsp.microejlib.relative.dir" value="${bsp.microejlib.relative.dir}"/>
-		</propertyfile>		
-	</target>
-	
-	<target name="bsp/workbenchExtension/augment/inc" if="bsp.microejinc.relative.dir">
-		<propertyfile file="${deploy.bsp.properties.file.location}">
-			<entry key="deploy.bsp.microejinc.relative.dir" value="${bsp.microejinc.relative.dir}"/>
-		</propertyfile>		
-	</target>
-	
-	<target name="bsp/workbenchExtension/augment/script" if="bsp.microejscript.relative.dir">
-		<propertyfile file="${deploy.bsp.properties.file.location}">
-			<entry key="deploy.bsp.microejscript.relative.dir" value="${bsp.microejscript.relative.dir}"/>
-		</propertyfile>		
-	</target>
-	
-	<target name="bsp/workbenchExtension/augment/root" if="bsp.root.dir">
-		<propertyfile file="${deploy.bsp.properties.file.location}">
-			<!-- Set the absolute path for local usage when the Platform does not yet include the BSP in its sub-folder -->
-			<entry key="deploy.bsp.local.root.dir" value="${bsp.root.dir}"/>
-		</propertyfile>		
-	</target>
 </project>
