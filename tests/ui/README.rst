@@ -20,6 +20,9 @@ For each test, its configuration and its results are described in a
 dedicated section. See `Quick Start`_ section which resume how to configure the
 tests, how to launch them and the expected results.
 
+Additionally, the `Tool-Java-Touch <https://github.com/MicroEJ/Tool-Java-Touch>`_ project
+allows to test the correct behavior of MicroUI in a Java application. 
+
 Dependencies
 ============
 

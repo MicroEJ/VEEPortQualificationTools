@@ -11,6 +11,32 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a Changelog <https://keepachangelog.com/en/1.0.0/>`_, and this project adheres to `Semantic Versioning <https://semver.org/spec/v2.0.0.html>`_.
 
 -------------------
+2.4.0 -- 2021-04-16
+-------------------
+
+Added
+=====
+
+- Documentation for testing build and run scripts.
+
+Changed
+=======
+
+- Platform Configuration Additions 1.2.0 (see `CHANGELOG <framework/platform/content/build/CHANGELOG.md>`_).
+- ``cd`` into the script's directory in CDT scripts because CDT needs to be called from the directory in which the project is.
+- Use CDT variable ``CUBE_PROGRAMMER_DIR`` absolute path instead of relative so the user can choose another Cube Programmer installation than the one installed in CDT.
+- Replace CDT ``cleanBuild`` by ``build`` as the clean is not needed and it forces to rebuild the whole project.
+- Improve comments on how to use ``set_project_env.bat.tpl`` for Keil uVision.
+
+Fixed
+=====
+
+- IAREW run script compliance (copy of the local ``application.out``).
+- Keil uVision run script compliance (copy of the local ``application.out``).
+- Documentation of ``target.platform.dir`` to setup the Test Suite FS.
+- CORE Test Suite updated to 3.0.2 (see `CHANGELOG <tests/core/java/microej-core-validation/CHANGELOG.md`_).
+
+-------------------
 2.3.0 -- 2021-01-13
 -------------------
 

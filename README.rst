@@ -64,9 +64,15 @@ The ``framework/c/`` folders contains the following:
 Platform Configuration Additions
 --------------------------------
 
-The ``framework/platform/`` folder contains the MicroEJ Platform Configuration Additions.
+The ``framework/platform/content`` folder contains the MicroEJ Platform Configuration Additions.
 See the `Platform Configuration Additions README <framework/platform/README.rst>`_ for more information.
 For licenses management, please refer to `License <https://docs.microej.com/en/latest/overview/licenses.html>`_ .
+
+Build and Run Scripts Examples
+------------------------------
+
+The ``framework/platform/scripts`` folder contains Build and Run Scripts examples for several third-party toolchains.
+See the ``Build and Run Scripts Examples README <framework/platform/scripts/README.rst`_ for more information.
 
 Test Suites
 -----------

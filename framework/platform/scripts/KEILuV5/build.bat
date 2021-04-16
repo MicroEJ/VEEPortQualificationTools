@@ -1,6 +1,6 @@
 @echo off
 
-REM Copyright 2020 MicroEJ Corp. All rights reserved.
+REM Copyright 2020-2021 MicroEJ Corp. All rights reserved.
 REM Use of this source code is governed by a BSD-style license that can be found with this software.
 
 REM 'build.bat' implementation for Keil µVision5.
@@ -15,10 +15,10 @@ IF %ERRORLEVEL% NEQ 0 (
 
 @echo on
 
-"%KEIL_INSTALLATION_DIR%\UV4\UV4.exe" -b "%KEIL_PROJECT_DIR%\%KEIL_PROJECT_NAME%.uvprojx" -t "%KEIL_PROJECT_CONFIGURATION%" -j0 -l %TEMP%\%KEIL_PROJECT_NAME%_build_log.txt
+"%KEIL_INSTALLATION_DIR%\UV4\UV4.exe" -b "%KEIL_PROJECT_DIR%\%KEIL_PROJECT_NAME%.uvprojx" -t "%KEIL_TARGETNAME%" -j0 -l %TEMP%\%KEIL_PROJECT_NAME%_build_log.txt
 
 REM Print last command logs and delete associated temporary file
 type %TEMP%\%KEIL_PROJECT_NAME%_build_log.txt
 del %TEMP%\%KEIL_PROJECT_NAME%_build_log.txt
 
-copy /Y "%KEIL_PROJECT_DIR%\%KEIL_PROJECT_CONFIGURATION%\%KEIL_PROJECT_CONFIGURATION%.axf" application.out
+copy /Y %KEIL_PROJECT_EXECUTABLE_FILE% application.out

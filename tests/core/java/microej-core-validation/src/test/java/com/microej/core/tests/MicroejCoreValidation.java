@@ -1,7 +1,7 @@
 /*
  * Java
  *
- * Copyright 2013-2020 MicroEJ Corp. All rights reserved.
+ * Copyright 2013-2021 MicroEJ Corp. All rights reserved.
  * This library is provided in source code for use, modification and test, subject to license terms.
  * Any modification of the source code will break MicroEJ Corp. warranties on the whole library.
  */
@@ -36,7 +36,7 @@ import ej.bon.Util;
  */
 public class MicroejCoreValidation {
 
-	private static final String VERSION = "3.0.0";
+	private static final String VERSION = "3.0.2";
 
 	private static final String PROPERTY_SUFFIX = "com.microej.core.tests.";
 	private static final String OPTION_CLOCK_NB_SECONDS = "clock.seconds";
@@ -390,12 +390,6 @@ public class MicroejCoreValidation {
 			deltaPercentage = 100;
 		}
 
-		assertTrue("counter increments < " + ROUND_ROBIN_MIN_COUNTER_REQUIRED + " (actually " + minCounter + ")",
-				minCounter >= ROUND_ROBIN_MIN_COUNTER_REQUIRED);
-
-		assertTrue("delta percentage > " + ROUND_ROBIN_MAX_DELTA_PERCENTAGE_ALLOWED + " (actually " + deltaPercentage
-				+ ")", deltaPercentage <= ROUND_ROBIN_MAX_DELTA_PERCENTAGE_ALLOWED);
-
 		if (deltaPercentage > ROUND_ROBIN_MAX_DELTA_PERCENTAGE_ALLOWED) {
 			// Print some information when the test fails
 			System.out.println("Min counter = " + minCounter);
@@ -404,6 +398,12 @@ public class MicroejCoreValidation {
 			System.out.println("Delta = " + deltaCounter);
 			System.out.println("Delta Percentage = " + deltaPercentage);
 		}
+
+		assertTrue("counter increments < " + ROUND_ROBIN_MIN_COUNTER_REQUIRED + " (actually " + minCounter + ")",
+				minCounter >= ROUND_ROBIN_MIN_COUNTER_REQUIRED);
+
+		assertTrue("delta percentage > " + ROUND_ROBIN_MAX_DELTA_PERCENTAGE_ALLOWED + " (actually " + deltaPercentage
+				+ ")", deltaPercentage <= ROUND_ROBIN_MAX_DELTA_PERCENTAGE_ALLOWED);
 	}
 
 	/**
@@ -449,12 +449,6 @@ public class MicroejCoreValidation {
 	@Test
 	public void testFPU() {
 		System.out.println("-> Check FPU (soft/hard FP option)...");
-		// In BSP, write and compile the following functions:
-		// --------------------
-		// #include "sni.h"
-		// jfloat Java_com_microej_MicroejCoreValidation_testFloat (jfloat a, jfloat b) {return a * b;}
-		// jdouble Java_com_microej_MicroejCoreValidation_testDouble (jdouble a, jdouble b) {return a * b;}
-		// --------------------
 
 		assertEquals("test 'float * float' in Java: FPU option is not coherent between MicroEJ Platform and BSP",
 				new Float(testFPUJava(float3, float4)), new Float(12f));
