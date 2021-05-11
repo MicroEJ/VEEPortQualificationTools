@@ -1,7 +1,7 @@
 Build and Run Scripts Examples
 ==============================
 
-This directory contains examples of build scripts for several toolchains and run scripts for several programming tools.
+This directory contains examples of build and run scripts for several toolchains and programming tools.
 
 Overview
 --------
@@ -29,13 +29,13 @@ specification described in `BSP Run Script File
 Usage
 -----
 
-Add the build scripts to the BSP.
+Add the build and run scripts to the BSP.
 
-General recommendation for build scripts
-----------------------------------------
+General recommendations for build and run scripts
+------------------------------------------------
 
-In addition to the specification of the build scripts, here are some
-general recommendation for the build scripts:
+In addition to the specification of the build and run scripts, here
+are some general recommendations for the scripts:
 
 - When applicable, use the following naming convention for the
   toolchain installation directory:
@@ -46,6 +46,9 @@ general recommendation for the build scripts:
   Workbench version 8.3.x.
 
 - Document the required variables, provide examples when applicable.
+
+Stub implementations of build and run script are provided as example
+for both Windows (``WINDOWS_STUB/``) and Unix (``UNIX_STUB/``).
 
 Test Scripts
 ------------
@@ -88,12 +91,37 @@ After developing a new script or modifying existing scripts for you needs, check
    - Launch ``c:\tmp\my rép\bsp\[path_to_build_script]\build.bat``
    - Launch ``c:\tmp\my rép\bsp\[path_to_build_script]\run.bat``
    - Check the executable has been programmed and started on device (e.g. it prints ``Hello World #2!``)
-   - Change current directory to ``c:tmp\my rép\test2``
+   - Change current directory to ``c:tmp\my rép\test``
    - Launch ``c:\tmp\my rép\bsp\[path_to_build_script]\run.bat``
    - Check the executable has been programmed and started on device (e.g. it prints ``Hello World!``)
 
+#. Test Run From Parameter
+
+   The current directory is ``c:tmp\my rép\test`` and contains ``application.out`` file that prints ``Hello World!``.
+   This last test verifies that the executable passed as parameter is taken prior to the ``application.out`` file.
+ 
+   - Launch ``c:\tmp\my rép\bsp\[path_to_build_script]\run.bat c:tmp\my rép\test2\application.out``
+   - Check the executable has been programmed and started on device (e.g. it prints ``Hello World #2!``)
+
 Troubleshooting
 ---------------
+
+Permissions on BSP script files
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The file permissions are not preserved during the build of a Platform.
+If the third-party toolchain requires specific permissions (such as
+the executable permission) during the execution of the build or the
+run scripts, they must be enforced in the scripts.  For example, in
+the build script file:
+
+.. code-block:: sh
+
+   # Add exec permission on a file
+   chmod +x ../toolchain/a_script.sh
+
+   # Add exec permission on all .sh files in a directory hierarchy
+   find ../a_module/ -type f -name \*.sh -exec chmod +x {} \;
 
 Issues with path length on Windows
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

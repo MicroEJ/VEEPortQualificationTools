@@ -1,7 +1,7 @@
 <!--
 	ANT
 
-	Copyright 2020 MicroEJ Corp. All rights reserved.
+	Copyright 2020-2021 MicroEJ Corp. All rights reserved.
 	Use of this source code is governed by a BSD-style license that can be found with this software.
 	
 -->
@@ -146,6 +146,20 @@
 		
 		<!-- Use same naming convention than MicroEJ Workbench-->
 		<property name="platform.project.name" value="${configuration.platform(hardwarePartNumber)}-${platform.name}-${microej.architecture.toolchain}-${platform.version}"/>
+
+		<!-- Error when the platform project does not exist  -->
+        <condition property="platform.project.file.expected" value="${project.parent.dir}/${configuration.platform(hardwarePartNumber)}-${platform.project.name.expected}-${microej.architecture.toolchain}-${platform.version}/.project">
+          <isset property="platform.project.name.expected" />
+        </condition>
+		<fail message=".${line.separator}
+			Output platform '${platform.project.file.expected}' does not exist.">
+			<condition>
+			  <and>
+                    <isset property="platform.project.file.expected" />
+				    <not><available file="${platform.project.file.expected}" type="file"/></not>
+				</and>
+			</condition>
+        </fail>
 		
 		<!-- Error when output folder exists and not denote a platform project -->
 		<fail message=".${line.separator}
@@ -158,11 +172,12 @@
 					<or>
 						<not><resourcecontains resource="${project.parent.dir}/${platform.project.name}/.project" substring="jpfNature"/></not>
 						<not><resourcecontains resource="${project.parent.dir}/${platform.project.name}/.project" substring="jpfBuilder"/></not>
+						<not><resourcecontains resource="${project.parent.dir}/${platform.project.name}/.project" substring="${platform.project.name}"/></not>
 					</or>
 				</and>
 			</condition>
 		</fail>
-		
+			
 		<condition property="platform.expected.project.exist" value="true">
 			<available file="${project.parent.dir}/${platform.project.name}" type="dir"/>
 		</condition>

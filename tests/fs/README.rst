@@ -17,11 +17,11 @@ Specifications
 - Test Suite Module: `com.microej.pack.fs#fs-testsuite <https://repository.microej.com/modules/com/microej/pack/fs/fs-testsuite/>`_
 
 Update the FS Test Suite module version in the `module.ivy
-<tests/fs/java/module.ivy>`_ to match the requirement of the platform
+<java/java-testsuite-fs/module.ivy>`_ to match the requirement of the platform
 tested.
 
 Please refer to `Platform Qualification Test Suite Versioning
-<https://docs.microej.com/en/latest/PlatformDeveloperGuide/platformQualification.html#test-suite-versioning`_
+<https://docs.microej.com/en/latest/PlatformDeveloperGuide/platformQualification.html#test-suite-versioning>`_
 to determine the FS Test Suite module version.
 
 Prerequisites
@@ -30,7 +30,7 @@ Prerequisites
 Before starting the test suite, make sure you have the following requirements:
 
 - MicroEJ SDK version ``5.1.1`` or higher.
-- A MicroEJ Platform imported in the workspace, which has been built using `Platform Configuration Additions <framework/platform/README.rst>`_ version ``1.0.0`` or higher.
+- A MicroEJ Platform imported in the workspace, which has been built using `Platform Configuration Additions <../../framework/platform/README.rst>`_ version ``1.0.0`` or higher.
 - A device connected to the PC both for programming and to get output traces. See Platform specific documentation for setup. 
 - If the Platform requires output traces redirection (e.g. when your device dumps the standard output on a serial port), start the
   `Serial to Socket Transmitter <https://docs.microej.com/en/latest/ApplicationDeveloperGuide/serialToSocketTransmitter.html>`_ tool.

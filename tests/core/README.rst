@@ -47,7 +47,7 @@ Configuration
    - ``framework/c/CoreMark/``
 
 3. Create ``core_portme.h`` and ``core_portme.h`` files to port EEMBC CoreMark
-   (http://www.eembc.org/coremark/index.php). Insert the directive line :code:`#define main core_main` in the ``core_portme.h``. Add CoreMark files to the BSP project.
+   (http://www.eembc.org/coremark/index.php). Insert the directive line :code:`#define main core_main` in the ``core_portme.h``.
 
 4. Implement all functions defined in these files:
 

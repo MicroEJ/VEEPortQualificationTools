@@ -1,7 +1,7 @@
 <!--
 	ANT
 
-	Copyright 2020 MicroEJ Corp. All rights reserved.
+	Copyright 2020-2021 MicroEJ Corp. All rights reserved.
 	Use of this source code is governed by a BSD-style license that can be found with this software.
 	
 -->
@@ -60,7 +60,11 @@
 			</condition>
 		</fail>
 		<echo message="Execution of script '${bsp.microejscript.path}' started..."/>
-		<exec dir="${project.dir}" executable="${bsp.microejscript.path}" failonerror="true" />
+		<exec dir="${project.dir}" executable="${bsp.microejscript.path}" failonerror="true" osfamily="windows" />
+        <!-- OS family `unix` matches on both Linux and MacOS. -->
+        <exec dir="${project.dir}" executable="/bin/bash" failonerror="true" osfamily="unix">
+          <arg value="${bsp.microejscript.path}" />
+        </exec>
 		<echo message="Execution of script '${bsp.microejscript.path}' done."/>
 	</target>
 	

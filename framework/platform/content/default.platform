@@ -3,6 +3,6 @@
 	Copyright 2020-2021 MicroEJ Corp. All rights reserved.
 	Use of this source code is governed by a BSD-style license that can be found with this software.
 -->
-<platform hardwarePartNumber="mydevice" name="myplatform" version="0.1.0" provider="mycompany" vendorUrl="" workbenchMinVersion="5.1.2">
-    <environment architecture="[ARCHITECTURE_AUTOMATICALLY_REPLACED]" baseline="[BASELINE_AUTOMATICALLY_REPLACED]" hardwarePartNumber="[HARDWAREPARTNUMBER_AUTOMATICALLY_REPLACED]" toolchain="[TOOLCHAIN_AUTOMATICALLY_REPLACED]" name="[NAME_AUTOMATICALLY_REPLACED]" techVersion="[TECHVERSION_AUTOMATICALLY_REPLACED]" version="[VERSION_AUTOMATICALLY_REPLACED]" level="[LEVEL_AUTOMATICALLY_REPLACED]" provider="[PROVIDER_AUTOMATICALLY_REPLACED]" licenseTag="[LICENSETAG_AUTOMATICALLY_REPLACED]"/>
+<platform hardwarePartNumber="mydevice" name="PLATFORM_NAME_AUTOMATICALLY_REPLACED" version="PLATFORM_VERSION_AUTOMATICALLY_REPLACED" provider="mycompany" vendorUrl="" workbenchMinVersion="5.1.2">
+    <environment architecture="ARCHITECTURE_AUTOMATICALLY_REPLACED" baseline="BASELINE_AUTOMATICALLY_REPLACED" hardwarePartNumber="HARDWAREPARTNUMBER_AUTOMATICALLY_REPLACED" toolchain="TOOLCHAIN_AUTOMATICALLY_REPLACED" name="NAME_AUTOMATICALLY_REPLACED" techVersion="TECHVERSION_AUTOMATICALLY_REPLACED" version="VERSION_AUTOMATICALLY_REPLACED" level="LEVEL_AUTOMATICALLY_REPLACED" provider="PROVIDER_AUTOMATICALLY_REPLACED" licenseTag="LICENSETAG_AUTOMATICALLY_REPLACED"/>
 </platform>

@@ -33,7 +33,7 @@ void core_main(void);
  * @fn bool X_CORE_BENCHMARK_run(void)
  * @brief This function is called to run the CoreMark benchmark.
  *
- * This function should called core_main().
+ * This function should call core_main().
  *
  * @return true if the benchmark was run, false otherwise.
  */
