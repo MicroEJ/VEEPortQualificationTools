@@ -1,17 +1,20 @@
 /*
  * C
  * 
- * Copyright 2019-2020 MicroEJ Corp. All rights reserved.
+ * Copyright 2019-2021 MicroEJ Corp. All rights reserved.
  * Use of this source code is governed by a BSD-style license that can be found with this software.
  */
+
+#include "t_ui_main.h"
+
+#ifdef ENABLE_FLUSH_TESTS
 
 #include <stdlib.h>
 #include <stdint.h>
 #include <stdio.h>
 #include "x_ui_framerate.h"
-#include "LLDISPLAY.h"
-#include "../../../../framework/c/utils/inc/u_print.h"
-#include "../../../../framework/c/utils/inc/u_time_base.h"
+#include "../../../../../framework/c/utils/inc/u_print.h"
+#include "../../../../../framework/c/utils/inc/u_time_base.h"
 
 /*
  * Defines the number of loops to get an average of bench time.
@@ -39,17 +42,17 @@
 
 /** private function definitions */
 
-static void flush_and_sync(uint32_t* buffer_address)
+static void flush_and_sync(uint8_t** buffer_address)
 {
-	*buffer_address = LLDISPLAY_flush(*buffer_address, 0, 0, LLDISPLAY_getWidth() - 1, LLDISPLAY_getHeight() - 1);
-	LLDISPLAY_synchronize();
+	*buffer_address = LLUI_DISPLAY_IMPL_flush(NULL, *buffer_address, 0, 0, LLUI_DISPLAY_InitData.lcd_width - 1, LLUI_DISPLAY_InitData.lcd_height - 1);
+	T_UI_LCD_wait_flush();
 }
 
 /*
  * Retrieves the LCD framerate simulating some drawings during given time.
  * @return a time in us
  */
-static uint32_t get_framerate_time(uint32_t* buffer_address, uint32_t drawing_time_us)
+static uint32_t get_framerate_time(uint8_t** buffer_address, uint32_t drawing_time_us)
 {
 	// We don't know when the first flush is performed when tearing signal is used.
 	// -> perform a flush/sync action on test startup to start the bench just after
@@ -79,7 +82,7 @@ static uint32_t get_framerate_time(uint32_t* buffer_address, uint32_t drawing_ti
 /*
  * Adjusts the time to perform some drawings. This time must not change the expected LCD framerate.
  */
-static uint32_t adjust_drawing_time(uint32_t drawing_time_us, uint32_t drawing_time_step_us, uint32_t framerate_time_us_ref, uint32_t* buffer_address)
+static uint32_t adjust_drawing_time(uint32_t drawing_time_us, uint32_t drawing_time_step_us, uint32_t framerate_time_us_ref, uint8_t** buffer_address)
 {
 	uint32_t framerate_with_drawing = framerate_time_us_ref;
 
@@ -100,7 +103,7 @@ static uint32_t adjust_drawing_time(uint32_t drawing_time_us, uint32_t drawing_t
 
 /* public function definitions */
 
-void X_UI_FRAMERATE_get(uint32_t buffer_address, uint32_t* framerate_time_us, uint32_t* flush_copy_time_us)
+void X_UI_FRAMERATE_get(uint8_t* buffer_address, uint32_t* framerate_time_us, uint32_t* flush_copy_time_us)
 {
 	// retrieve the LCD minimal framerate time
 	UTIL_print_string("Retrieve the LCD framerate...\n");
@@ -125,3 +128,5 @@ void X_UI_FRAMERATE_get(uint32_t buffer_address, uint32_t* framerate_time_us, ui
 	PRINT_TIME(*flush_copy_time_us);
 	TEST_DBG(")\n");
 }
+
+#endif // ENABLE_FLUSH_TESTS

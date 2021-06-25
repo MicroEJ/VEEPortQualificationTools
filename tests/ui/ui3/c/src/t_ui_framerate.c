@@ -1,19 +1,20 @@
 /*
  * C
  *
- * Copyright 2019-2020 MicroEJ Corp. All rights reserved.
+ * Copyright 2019-2021 MicroEJ Corp. All rights reserved.
  * Use of this source code is governed by a BSD-style license that can be found with this software.
  */
+#include "t_ui_main.h"
+
+#ifdef ENABLE_FLUSH_TESTS
+
 #include <stdio.h>
 #include <stdarg.h>
-#include "../../../../framework/c/embunit/embUnit/embUnit.h"
-#include "../../../../framework/c/utils/inc/u_print.h"
-#include "../../../../framework/c/utils/inc/u_time_base.h"
-#include "x_version.h"
+#include "../../../../../framework/c/embunit/embUnit/embUnit.h"
+#include "../../../../../framework/c/utils/inc/u_print.h"
+#include "../../../../../framework/c/utils/inc/u_time_base.h"
 #include "t_ui_framerate.h"
 #include "x_ui_framerate.h"
-#include "LLDISPLAY.h"
-#include "t_ui_main.h"
 
 static void T_UI_FRAMERATE_setUp(void)
 {
@@ -38,11 +39,10 @@ static void print_drawing_time_report(float frequency, uint32_t div, uint32_t fr
 
 static void T_UI_FRAMERATE_getFramerate(void)
 {
-	uint32_t buffer_address = LLDISPLAY_getGraphicsBufferAddress();
 	uint32_t framerate_time_us;
 	uint32_t flush_copy_time_us;
 
-	X_UI_FRAMERATE_get(LLDISPLAY_getGraphicsBufferAddress(), &framerate_time_us, &flush_copy_time_us);
+	X_UI_FRAMERATE_get(LLUI_DISPLAY_InitData.back_buffer_address, &framerate_time_us, &flush_copy_time_us);
 
 	float frequency = 1/(((float)framerate_time_us)/1000000);
 
@@ -73,3 +73,5 @@ TestRef T_UI_FRAMERATE_tests(void)
 
 	return (TestRef)&framerateTest;
 }
+
+#endif // ENABLE_FLUSH_TESTS
