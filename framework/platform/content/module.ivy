@@ -8,6 +8,11 @@
     	<ea:plugin org="com.is2t.easyant.plugins" module="eclipse-antRunner" revision="1.+"/>
     	<ea:plugin org="com.is2t.easyant.plugins" module="mam" revision="1.+"/>
 
+    	<ea:plugin org="com.is2t.easyant.plugins" module="artifact-checker" revision="1.7.+"/>
+    	<ea:plugin org="com.is2t.easyant.plugins" module="changelog" revision="2.0.+"/>
+    	<ea:plugin org="com.is2t.easyant.plugins" module="license" revision="2.0.+"/>
+    	<ea:plugin org="com.is2t.easyant.plugins" module="readme" revision="2.2.+"/>
+
         <!-- Retrieve embedded and default dependencies -->
     	<ea:property name="dependencies.retrieve.conf" value="embedded,default" />
     	<ea:plugin org="com.is2t.easyant.plugins" module="ivy-retrieve" revision="1.+"/>
@@ -29,11 +34,21 @@
 	</publications>
     
     <dependencies>
-		<dependency org="com.microej.architecture.xxx" name="xxx" rev="7.14.0">
-            <artifact name="xxx" m:classifier="${com.microej.platformbuilder.architecture.usage}" ext="xpf"/>
-        </dependency>
-
-		<dependency org="com.microej.pack.xxx" name="xxx" rev="x.x.x"/>
+    	<!-- 
+    		MicroEJ Architecture Dependency (required)
+    		    		
+    		Option 'com.microej.platformbuilder.architecture.usage' allows to parameterize the usage level at build-time (Evaluation or Production)  
+    	-->
+    	<!--
+	    	<dependency org="com.microej.architecture.xxx" name="xxx" rev="7.14.0">
+	            <artifact name="xxx" m:classifier="${com.microej.platformbuilder.architecture.usage}" ext="xpf"/>
+	        </dependency>
+		-->
+		
+    	<!-- MicroEJ Packs Dependencies (optional) -->
+		<!--
+			<dependency org="com.microej.pack.xxx" name="xxx" rev="x.x.x"/>
+		-->
     </dependencies>
     
 </ivy-module>

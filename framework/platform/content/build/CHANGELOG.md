@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] - [2021-07-07]
+
+### Changed
+
+- Copy the files LICENSE.txt, README.rst, RELEASE_NOTES.rst and CHANGELOG.rst to the artifact published if the files are available.
+- Plug the artifact checker to allow the check the artifact published (disabled by default).
+
+## [1.3.1] - [2021-06-30]
+
+### Changed
+
+- Moved `module.ivy` examples of dependencies in comments with description
+
 ## [1.3.0] - [2021-05-11]
 
 ### Added

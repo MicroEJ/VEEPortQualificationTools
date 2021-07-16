@@ -15,7 +15,7 @@ It contains sources and projects to check drivers and implementation of LLAPI ``
 .. note:: 
 
    These tests only concern the MicroEJ Platforms made against the MicroEJ UI Packs 13.0.0 and higher.
-   For the older MicroEJ UI packs, see `UI2 Readme <../ui2/README.rst>`_ .
+   For the older MicroEJ UI packs, see `UI2 Readme <../ui2/README.rst>`_.
 
 All tests can be run in one step: all tests will be executed one by one
 and are run in a specific order, *next one* expects *previous one* is
@@ -31,8 +31,8 @@ allows to test the correct behavior of MicroUI in a Java application.
 Dependencies
 ============
 
--  Follow the main readme file
--  Follow the *CORE* readme file
+- Follow the `main Readme <../../../README.rst>`_.
+- Follow the `CORE Readme <../../core/README.rst>`_.
 
 Quick Start
 ===========
@@ -40,23 +40,25 @@ Quick Start
 Configuration
 -------------
 
-1. Add all files of these folders as source files:
+#. Follow the configuration of the `CORE Test Suite <../../core/README.rst>`_.
 
-   -  ``tests/ui/c/src``
+#. Add all files of these folders as source files:
 
-2. Add these folders as include folders:
+   -  ``tests/ui/ui3/c/src``
 
-   -  ``tests/ui/c/inc``
+#. Add these folders as include folders:
 
-3. Implement all functions defined in these files:
+   -  ``tests/ui/ui3/c/inc``
+
+#. Implement all functions defined in these files:
 
    -  ``x_impl_config.c``: see `Tests Description`_
 
-4. Add a call to the function ``T_UI_main()`` just before the call to
+#. Add a call to the function ``T_UI_main()`` just before the call to
    ``microej_main()``.
-5. In the MicroEJ SDK, import the MicroEJ project ``microej-ui-validation`` from the folder ``tests/ui/java``.
-6. Build this MicroEJ Application against the MicroEJ Platform to qualify.
-7. Build the BSP and link it with the MicroEJ Platform runtime library and MicroEJ Application.
+#. In the MicroEJ SDK, import the MicroEJ project ``microej-ui-validation`` from the folder ``tests/ui/ui3/java``.
+#. Build this MicroEJ Application against the MicroEJ Platform to qualify.
+#. Build the BSP and link it with the MicroEJ Platform runtime library and MicroEJ Application.
 
 Flush Tests
 -----------

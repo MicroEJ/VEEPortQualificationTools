@@ -23,7 +23,7 @@ tests, how to launch them and the expected results.
 Dependencies
 ============
 
-- Follow the main readme file
+- Follow the `main Readme <../../README.rst>`_.
 - EEMBC Coremark
 
 Quick Start
