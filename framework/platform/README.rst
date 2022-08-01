@@ -1,10 +1,15 @@
 MicroEJ Platform Configuration Additions
 ========================================
 
-This directory contains all required files to properly configure an empty MicroEJ Platform project connected to a third party C BSP (Board Support Package) project.
+This directory contains all required files to properly configure an empty MicroEJ Platform project 
+connected to a third party C BSP (Board Support Package) project.
 
-- The ``content`` directory contains files that must be installed in a MicroEJ Platform configuration directory (the directory that contains the ``.platform`` file).
-  It can be automatically downloaded using the following command line:
+- The ``content`` directory contains files that must be copied into MicroEJ Platform configuration directory.
+  Configuration directory is the one that holds "[PLATFORM_NAME]-configuration" project that contains the ``.platform`` file.
+  This directory can be downloaded by cloning or downloading the repository through web interface.
+  
+  Optionally, if you have Subversion (svn command) installed, it also can be automatically downloaded using the 
+  following command line:
 
   .. code-block:: console
    

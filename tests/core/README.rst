@@ -1,5 +1,5 @@
 .. ReStructuredText
-.. Copyright 2019-2021 MicroEJ Corp.  MicroEJ Corp. All rights reserved.
+.. Copyright 2019-2022 MicroEJ Corp.  MicroEJ Corp. All rights reserved.
 .. Use of this source code is governed by a BSD-style license that can be found with this software.
 
 **********************
@@ -9,18 +9,17 @@ Core Engine Test Suite
 Overview
 ========
 
-This folder is a part of a project which gathers the Platform Qualification Tools.
-It contains sources and projects to check drivers and implementation of print, time base, RAM, Core, and MicroEJ Core.
+This folder contains sources and projects to test drivers and implementation of print, time base, RAM, Core (see `Tests Description`_), and MicroEJ Core (see `MicroEJ Core Validation`_).
 
 All tests can be run in one step: all tests will be executed one by one
 and are run in a specific order, *next one* expects *previous one* is
 passed.
 
-For each test, its configuration and its results are described in a
-dedicated section. See `Quick Start`_ section which resume how to configure the
-tests, how to launch them and the expected results.
+For each test, the configuration and results are described in a
+dedicated section. See `Quick Start`_ section which summarize how to configure the
+tests, how to launch them and how to analyze the report.
 
-Dependencies
+Requirements
 ============
 
 - Follow the `main Readme <../../README.rst>`_.
@@ -56,8 +55,8 @@ Configuration
 
 5. Include ``t_core_main.h`` header and add a call to the function
    ``T_CORE_main()`` just before the call to ``microej_main()``.
-6. In the MicroEJ SDK, import the MicroEJ project ``microej-core-validation`` from the folder ``tests/core/java``
-7. Follow `MicroEJ Core Validation Readme <java/microej-core-validation/README.rst>`_ and build this MicroEJ Application against the MicroEJ Platform to qualify.
+6. In the MicroEJ SDK, import the MicroEJ project ``java-testsuite-runner-core`` from the folder ``tests/core``
+7. Follow `MicroEJ Core Validation Readme <java-testsuite-runner-core/README.rst>`_ and build this MicroEJ Application against the MicroEJ Platform to qualify.
 8. Build the BSP and link it with the MicroEJ Platform runtime library and MicroEJ Application.
 
 Expected Results
@@ -109,11 +108,10 @@ Expected Results
    OK (27 tests)
    VM START
    *****************************************************************************************************
-   *                                  MicroEJ Core Validation - 3.0.0                                  *
+   *                                  MicroEJ Core Validation - 3.1.0                                  *
    *****************************************************************************************************
-   * Copyright 2013-2020 MicroEJ Corp. All rights reserved.                                            *
-   * This library is provided in source code for use, modification and test, subject to license terms. *
-   * Any modification of the source code will break MicroEJ Corp. warranties on the whole library.     *
+   * Copyright 2013-2022 MicroEJ Corp. All rights reserved.                                            *
+   * Use of this source code is governed by a BSD-style license that can be found with this software.  *
    *****************************************************************************************************
    
    -> Check visible clock (LLMJVM_IMPL_getCurrentTime validation)...
@@ -150,6 +148,10 @@ Expected Results
    Task 1 ends.
    ...done.
    OK: testJavaRoundRobin
+   Main thread starts sleeping for 1s..
+   WaitMaxTimeThread starts sleeping for `Long.MAX_VALUE` milliseconds
+   Main thread woke up!
+   OK: testScheduleMaxTime
    -> Check isInReadOnlyMemory (LLBSP_IMPL_isInReadOnlyMemory validation)...
    Test synchronize on literal string
    Test synchronize on class
@@ -157,7 +159,26 @@ Expected Results
    OK: testIsInReadOnlyMemory
    -> Check FPU (soft/hard FP option)...
    OK: testFPU
-   PASSED: 6
+   -> Check floating-point parser...
+   OK: testParseFP
+   -> Check floating-point formatter...
+   OK: testFormatFP
+   -> Check parsing a string as a double ; in some systems such operations may allocate memory in the C heap (strtod, strtof, malloc implementation)...
+   OK: testParseDoubleStringHeap
+   Property 'com.microej.core.tests.monotonic.time.check.seconds' is not set (default to '60' seconds)
+   -> Check monotonic time consistency for 60 seconds (LLMJVM_IMPL_getCurrentTime)...
+   .............................
+   OK: testMonotonicTimeIncreases
+   -> Check current time clock tick duration (LLMJVM_IMPL_getCurrentTime, LLMJVM_IMPL_getTimeNanos)...
+   Property 'com.microej.core.tests.max.allowed.clock.tick.duration.milliseconds' is not set (default to '20' millisecondss)
+   Estimated LLMJVM_IMPL_getCurrentTime clock tick is 1 ms.
+   Estimated LLMJVM_IMPL_getTimeNanos clock tick is lower than 30518 ns.
+   OK: testSystemCurrentTimeClockTick
+   -> Check schedule request clock tick duration (LLMJVM_IMPL_scheduleRequest)...
+   Property 'com.microej.core.tests.max.allowed.clock.tick.duration.milliseconds' is not set (default to '20' millisecondss)
+   Estimated LLMJVM_IMPL_scheduleRequest clock tick is 1 ms.
+   OK: testScheduleRequestClockTick
+   PASSED: 13  
    VM END (exit code = 0)
 
 --------------
@@ -235,6 +256,40 @@ No error must be thrown when executing this test:
 
    Time base check:
    .
+
+**Code Review**
+
+In addition to this automatic test, a code review must be done to spot potential 
+race conditions that are diffcult to check automatically.
+
+In some implementations, the current time is calculated by adding 2 values:
+
+* a high-precision time with a quick overflow: ``hp_time``
+* a low-precision time without any overflow risk: ``lp_time``
+
+Low-precision time is incremented when high-precision time overflows. 
+It is done usually in an interrupt or directly by the hardware.
+Computing time with an expression similar to ``time = lp_time + hp_time`` can lead 
+to a wrong result because this operation is not done atomically.
+Moreover, the compiler may reorder the accesses to ``hp_time`` and ``lp_time``.
+
+The right pattern to use is the following one, where ``hp_time`` and ``lp_time``
+are both declared **volatile**:
+
+::
+
+   // An interrupt may occur between read of lp_time and hp_time,
+   // this interrupt may modify lp_time,
+   // so, after accessing hp_time, we must check if lp_time has not been modified.
+   do {
+       lp_time_local = lp_time;        
+       hp_time_local = hp_time;
+   } while (lp_time_local != lp_time);
+   
+   time = lp_time_local + hp_time_local;
+
+The code review consists in verifying the implementations of ``LLMJVM_IMPL_getCurrentTime`` 
+and ``LLMJVM_IMPL_getTimeNanos`` to see if they follow the above recommendation.
 
 RAM Tests: t_core_ram.c
 -----------------------
@@ -348,12 +403,12 @@ and require an human check to be sure the time is correct.
 
 **Configuration**
 
-In the MicroEJ SDK, import the MicroEJ project `microej-core-validation <./java/microej-core-validation/>`_ from the folder ``tests/core/java``.
-Follow the MicroEJ Core Validation `README <./java/microej-core-validation/README.rst>`_ to build and link this MicroEJ Application against the MicroEJ Platform to qualify.
+In the MicroEJ SDK, import the MicroEJ project `java-testsuite-runner-core <./java-testsuite-runner-core/>`_ from the folder ``tests/core``.
+Follow the MicroEJ Core Validation `README <./java-testsuite-runner-core/README.rst>`_ to build and link this MicroEJ Application against the MicroEJ Platform to qualify.
 
 **Expected results**
 
-No error must be thrown when executing this test. A typical execution trace is described in the MicroEJ Core Validation `README <./java/microej-core-validation/README.rst>`_
+No error must be thrown when executing this test. A typical execution trace is described in the MicroEJ Core Validation `README <./java-testsuite-runner-core/README.rst>`_
 (the visible clock accuracy must be compared manually with an external clock).
 
 

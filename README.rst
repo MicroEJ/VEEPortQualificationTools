@@ -22,7 +22,7 @@ See `CORE Readme <tests/core/README.rst>`_
 Graphical User Interface Test Suite
 -----------------------------------
 
-The UI Test Suite is a C Test Suite. It checks the integration of the ``LLDisplay`` API and the tearing signal usage.
+The UI Test Suite is a Java Test Suite. It tests the implementation of the ``LLUI*`` API and the tearing signal usage.
 It also provides indication about the minimum draw time allowed to display animations at a given framerate.
 
 See `UI Readme <tests/ui/README.rst>`_
@@ -30,10 +30,44 @@ See `UI Readme <tests/ui/README.rst>`_
 Filesystem Test Suite
 ---------------------
 
-The FS Test Suite is a Java Test Suite. It checks the integration of the ``LLFS*`` APIs over a C File System library.
+The FS Test Suite is a Java Test Suite. It checks the implementation of the ``LLFS*`` APIs over a C File System library.
 
 See `FS Readme <tests/fs/README.rst>`_
 
+Network Core Engine Test Suite
+------------------------------
+
+The NET Test Suite is a Java Test Suite. It checks the implementation of the ``LLNET`` APIs.
+
+See `Network Core Engine Readme <tests/net/README.rst>`_
+
+SSL Test Suite
+--------------
+
+The SSL Test Suite is a Java Test Suite. It checks the implementation of the ``LLNET_SSL`` APIs.
+
+See `SSL Readme <tests/ssl/README.rst>`_
+
+SECURITY Test Suite
+--------------
+
+The SECURITY Test Suite is a Java Test Suite.
+
+See `SECURITY Readme <tests/security/README.rst>`_
+
+WatchdogTimer Test Suite
+-------------------------
+
+The WatchdogTimer Test Suite is a Java Test Suite. It checks the implementation of the ``LLWATCHDOG_TIMER`` APIs.
+
+See `WatchdogTimer Readme <tests/watchdog-timer/README.rst>`_
+
+ECOM-WIFI Test Suite
+--------------------
+
+The ECOM-WIFI Test Suite is a Java Test Suite.
+
+See `ECOM-WIFI Readme <tests/ecom-wifi/README.rst>`_
 
 Platform Qualification Tools Overview
 =====================================
@@ -72,7 +106,8 @@ Build and Run Scripts Examples
 ------------------------------
 
 The ``framework/platform/scripts`` folder contains Build and Run Scripts examples for several third-party toolchains.
-See the ``Build and Run Scripts Examples README <framework/platform/scripts/README.rst`_ for more information.
+
+See the `Build and Run Scripts Examples <framework/platform/scripts/README.rst>`_ for more information.
 
 Test Suites
 -----------
@@ -115,5 +150,5 @@ BSP. No specific unit test framework is used, each test describes how it
 works.
 
 ..
-   Copyright 2019-2021 MicroEJ Corp. All rights reserved.
+   Copyright 2019-2022 MicroEJ Corp. All rights reserved.
    Use of this source code is governed by a BSD-style license that can be found with this software.

@@ -1,44 +1,27 @@
 .. ReStructuredText
-.. Copyright 2019-2021 MicroEJ Corp.  MicroEJ Corp. All rights reserved.
+.. Copyright 2019-2022 MicroEJ Corp.  MicroEJ Corp. All rights reserved.
 .. Use of this source code is governed by a BSD-style license that can be found with this software.
 
 ***********************************
 Graphical User Interface Test Suite
 ***********************************
 
-Overview
-========
+This folder contains a ready-to-use project for testing the `Graphical User Interface<https://docs.microej.com/en/latest/PlatformDeveloperGuide/ui.html>`_ implementation on a device.
+This Test Suite will check the drivers and implementation of LLAPI ``LLDisplay``.
 
-This folder is a part of a project which gathers the Platform Qualification Tools.
-It contains sources and projects to check drivers and implementation of LLAPI ``LLDisplay``.
-
-.. note:: 
-
-   These tests only concern the MicroEJ Platforms made against the MicroEJ UI Packs [6.0.0-13.0.0[ (13.0.0 excluded).
-   For the newer MicroEJ UI packs, see `UI3 Readme <../ui3/README.rst>`_ .
-
-All tests can be run in one step: all tests will be executed one by one
-and are run in a specific order, *next one* expects *previous one* is
-passed.
-
-For each test, its configuration and its results are described in a
-dedicated section. See `Quick Start`_ section which resume how to configure the
-tests, how to launch them and the expected results.
+**Note**: These tests only concern the MicroEJ Platforms made against the MicroEJ UI Packs [6.0.0-13.0.0[ (13.0.0 excluded). For the newer MicroEJ UI packs, see `UI3 Readme <../ui3/README.rst>`_ .
 
 Additionally, the `Tool-Java-Touch <https://github.com/MicroEJ/Tool-Java-Touch>`_ project
 allows to test the correct behavior of MicroUI in a Java application. 
 
-Dependencies
-============
+Requirements
+------------
 
-- Follow the `main Readme <../../../README.rst>`_.
+- See Platform Test Suites `documentation <../../README.rst>`_.
 - Follow the `CORE Readme <../../core/README.rst>`_.
 
-Quick Start
-===========
-
-Configuration
--------------
+Usage
+-----
 
 #. Follow the configuration of the `CORE Test Suite <../../core/README.rst>`_.
 
@@ -52,16 +35,16 @@ Configuration
 
 #. Implement all functions defined in these files:
 
-   -  ``x_impl_config.c``: see `Tests Description`_
+   -  ``x_impl_config.c``: see `Tests Suite Description`_
 
 #. Add a call to the function ``T_UI_main()`` just before the call to
    ``microej_main()``.
-#. In the MicroEJ SDK, import the MicroEJ project ``microej-core-validation`` from the folder ``tests/core/java``.
+#. In the MicroEJ SDK, import the MicroEJ project ``java-testsuite-runner-core`` from the folder ``tests/core/java``.
 #. Build this MicroEJ Application against the MicroEJ Platform to qualify.
 #. Build the BSP and link it with the MicroEJ Platform runtime library and MicroEJ Application.
 
 Expected Results
-----------------
+++++++++++++++++
 
 ::
 
@@ -84,13 +67,15 @@ Expected Results
 
    OK (7 tests)
 
---------------
+Tests Suite Description
+-----------------------
 
-Tests Description
-=================
+All tests can be run in one step: all tests will be executed one by one
+and are run in a specific order, *next one* expects *previous one* is
+passed.
 
 API: t_ui_api.c
----------------
++++++++++++++++
 
 This test checks the ``LLDisplay`` implementation API. It ensures
 invalid values are not returned and the coherence between them.
@@ -132,7 +117,7 @@ No error must be thrown when executing this test:
    .
 
 Tearing: t_ui_tearing.c
------------------------
++++++++++++++++++++++++
 
 When possible, the LLDisplay implementation should synchronize the
 ``flush`` with the LCD tearing signal. This signal tells to the BSP the
@@ -172,7 +157,7 @@ rate, you can see rectangles even if LCD driver is using the LCD tearing
 signal.
 
 Framerate: t_ui_framerate.c
----------------------------
++++++++++++++++++++++++++++
 
 This test determinates the maximum time a drawing can take to respect a
 given LCD framerate. The LCD framerate is cadenced to the time to
@@ -224,3 +209,8 @@ and one this refresh rate divided by three.
 
 These results can be sent to MicroEJ in order to compare the BSP
 implementation with all others MicroEJ Platforms.
+
+Troubleshooting
+---------------
+
+See Platform Test Suites `documentation <../../README.rst>`_.
