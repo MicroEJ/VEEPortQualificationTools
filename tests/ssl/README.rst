@@ -1,5 +1,5 @@
 ..
-    Copyright 2022 MicroEJ Corp. All rights reserved.
+    Copyright 2022-2023 MicroEJ Corp. All rights reserved.
     Use of this source code is governed by a BSD-style license that can be found with this software.
 ..
 
@@ -14,7 +14,7 @@ Specifications
 --------------
 
 - Tested Foundation Library: `SSL <https://repository.microej.com/modules/ej/api/ssl/>`_
-- Test Suite Module: `com.microej.pack.ssl#ssl-2_2-testsuite <https://repository.microej.com/modules/com/microej/pack/ssl/ssl-2_2-testsuite/>`_
+- Test Suite Module: `com.microej.pack.net#net-ssl-2_2-testsuite <https://repository.microej.com/modules/com/microej/pack/net/net-ssl-2_2-testsuite/>`_
 
 Update the SSL Test Suite module version in the `module.ivy
 <java-testsuite-runner-ssl/module.ivy>`_ to match the requirement of the platform
@@ -39,7 +39,7 @@ Test Suite Properties
 ---------------------
 
 The NET Test Suite requires specific properties depending on the implementation and test environment.
-All the properties described in this section are defined in the file `microej-testsuite-common.properties <java-testsuite-runner-net/validation/microej-testsuite-common.properties>`_
+All the properties described in this section are defined in the file `microej-testsuite-common.properties <java-testsuite-runner-ssl/validation/microej-testsuite-common.properties>`_
 and prefixed by ``microej.java.property.``.
 
 - WiFi SSID and passphrase are set with respectively with the properties ``wifi.ssid`` and ``wifi.passphrase``.

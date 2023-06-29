@@ -7,7 +7,17 @@ adheres to `Semantic
 Versioning <https://semver.org/spec/v2.0.0.html>`__.
 
 
-.. _110--Unreleased:
+.. _120---2023-02-08:
+
+[1.2.0] - 2023-02-08
+--------------------
+
+Changed
+~~~~~~~
+
+- UI Test Suite 1.2.0.
+
+.. _110---2022-07-23:
 
 [1.1.0] - 2022-07-23
 --------------------
@@ -16,6 +26,7 @@ Added
 ~~~~~
 
 - Add test `testFlushTime`.
+- Add UI Test Suite dependency.
 
 Changed
 ~~~~~~~
@@ -35,5 +46,5 @@ Added
 -  Drawing time: retrieve the maximum drawing time to have the better framerate.
 
 ..
-    Copyright 2021-2022 MicroEJ Corp. All rights reserved.
+    Copyright 2021-2023 MicroEJ Corp. All rights reserved.
     Use of this source code is governed by a BSD-style license that can be found with this software.

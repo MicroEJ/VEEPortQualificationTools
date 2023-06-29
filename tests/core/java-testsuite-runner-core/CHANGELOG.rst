@@ -6,7 +6,19 @@ Changelog <https://keepachangelog.com/en/1.0.0/>`__, and this project
 adheres to `Semantic
 Versioning <https://semver.org/spec/v2.0.0.html>`__.
 
-.. _310--Unreleased:
+.. _320--2023-06-14:
+
+[3.2.0] - 2023-06-14
+--------------------
+
+Added
+~~~~~
+
+- Add check for floating-point arithmetic.
+- Add check for floating-point parse and toString with scientific notation.
+- Add check for SNI native calling convention (ABI).
+
+.. _310--2022-07-23:
 
 [3.1.0] - 2022-07-23
 --------------------
@@ -106,5 +118,5 @@ Added
 Features : - Initial revision
 
 ..
-    Copyright 2020-2022 MicroEJ Corp. All rights reserved.
+    Copyright 2020-2023 MicroEJ Corp. All rights reserved.
     Use of this source code is governed by a BSD-style license that can be found with this software.

@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0] - [2023-06-29]
+
+### Added
+
+- Add support to execute the optional RIP scripts that configure the RIP's module during the build of the VEE Port (`build/autoConfigurationXXX.xml` or `build/platform-XXX.ant`).
+
+### Changed
+
+- Separate files required for SDK version ``5.x`` from files required for Architecture version ``7.x``.
+
+### Fixed
+
+- Fix new empty line generated in  the `.platform` file when `com.microej.platformbuilder.module.multi.enabled` is set to `true`. This prevents a useless change in the VCS.
+
 ## [1.4.0] - [2021-07-07]
 
 ### Changed
@@ -29,6 +43,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Execute bash script file (`.sh`) with `/bin/bash`.  This ensure the build and run scripts are properly executed regardless of their file permissions.
 - Use placeholders for platform name and platform version in `default.platform` to make it obvious it is generated automatically.
+
+### Fixed
+
+- Execute `.bat` scripts on Windows 11 instead of `.sh` scripts.
 
 ## [1.2.0] - 2021-04-16
 
@@ -63,5 +81,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Initial version with scripts for BSP connection.
   
 ---
-_Copyright 2020-2021 MicroEJ Corp. All rights reserved._
+_Copyright 2020-2023 MicroEJ Corp. All rights reserved._
 _Use of this source code is governed by a BSD-style license that can be found with this software._

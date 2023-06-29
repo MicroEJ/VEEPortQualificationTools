@@ -1,5 +1,5 @@
 .. ReStructuredText
-.. Copyright 2019-2022 MicroEJ Corp.  MicroEJ Corp. All rights reserved.
+.. Copyright 2019-2023 MicroEJ Corp.  MicroEJ Corp. All rights reserved.
 .. Use of this source code is governed by a BSD-style license that can be found with this software.
 
 **********************
@@ -31,33 +31,58 @@ Quick Start
 Configuration
 -------------
 
-1. Add all files of these folders as source files:
+#. In your BSP project, add all files of these folders as source files:
 
-   - ``tests/core/c/src``
-   - ``framework/c/utils/src``
-   - ``framework/c/embunit/embUnit``
-   - ``framework/c/CoreMark/``
+   * ``tests/core/c/src/``
+   * ``framework/c/utils/src/``
+   * ``framework/c/embunit/embUnit/``
+   * ``framework/c/CoreMark/``
 
-2. Add these folders as include folders:
+#. In your BSP project, add these folders as include paths:
 
-   - ``tests/core/c/inc``
-   - ``framework/c/utils/inc``
-   - ``framework/c/embunit/embUnit``
-   - ``framework/c/CoreMark/``
+   * ``tests/core/c/inc/``
+   * ``framework/c/utils/inc/``
+   * ``framework/c/embunit/embUnit/``
+   * ``framework/c/CoreMark/``
 
-3. Create ``core_portme.c`` and ``core_portme.h`` files to port EEMBC CoreMark
-   (http://www.eembc.org/coremark/index.php). Insert the directive line :code:`#define main core_main` in the ``core_portme.h``. Add CoreMark files to the BSP project.
+#. Port EEMBC CoreMark (http://www.eembc.org/coremark/index.php) to your platform:
 
-4. Implement all functions defined in these files:
+   * Pick one of the provided skeleton configuration folders located in ``framework/c/CoreMark/`` (*barebones* is a good choice, but one of the other folders may match your project better). Copy its source files into your BSP project and make sure they will be compiled/included.
+   * Define the constants and functions required by CoreMark. What needs to be defined will depend on the configuration skeleton you picked, but CoreMark will at least require a clock and a text output. If you chose the *barebones* skeleton configuration, you will need to define the following:
 
-   -  ``x_ram_checks.h``: see `RAM Tests: t_core_ram.c`_ and `RAM Benchs: t_core_ram.c`_
-   -  ``x_core_benchmark.h``: Call EEMBC Coremark implementation.
+      * In ``core_portme.h``:
 
-5. Include ``t_core_main.h`` header and add a call to the function
-   ``T_CORE_main()`` just before the call to ``microej_main()``.
-6. In the MicroEJ SDK, import the MicroEJ project ``java-testsuite-runner-core`` from the folder ``tests/core``
-7. Follow `MicroEJ Core Validation Readme <java-testsuite-runner-core/README.rst>`_ and build this MicroEJ Application against the MicroEJ Platform to qualify.
-8. Build the BSP and link it with the MicroEJ Platform runtime library and MicroEJ Application.
+         * Define the ``ITERATIONS`` constant as a number of iterations high enough to keep the benchmark running for at least 10 seconds. You will have to adjust its value depending on the hardware and according to the benchmark report, but ``1000`` is a good starting point.
+         * Define the ``CLOCKS_PER_SEC`` as the frequency of your platform's clock ticks. CoreMark needs to be provided a clock to measure the time taken by the benchmarked operations. This constant will be used to convert the clock tick count to a value in seconds.
+         * Define the ``TIMER_RES_DIVIDER`` constant. Its value will be used to prevent overflows of the clock tick count, but will reduce the time measurement resolution in return. Unless the resolution of your clock is too high and you experience integer overflows, you can set this constant to ``1``.
+         * Go over the whole file and edit constants as needed for your platform. Specifically, you may want to edit the compiler version and flags, as well as some type definitions.
+
+      * In ``core_portme.c``:
+
+         * Implement ``barebones_clock`` to return the current time, measured in clock ticks. A clock frequency of 1 kHz is sufficient for CoreMark's measurements. You may use ``microej_time_get_current_time``, which should already be defined as it is required for the platform to run.
+         * Add any needed initialization step to ``portable_init``. Namely, you might need to initialize the UART output there (if it is not yet initialized when reaching this point).
+
+      * In ``ee_printf.c``:
+
+         * Implement ``uart_send_char`` to send a single character through the UART output.
+
+   * Finally, insert the directive line :code:`#define main core_main` in ``core_portme.h`` so that the BSP's main function does not conflict with CoreMark's main function.
+
+#. Define all functions declared in ``x_ram_checks.h`` and ``x_core_benchmark.h``.
+
+   * **RAM tests**: The RAM benchmark will perform several read, write and copy operations on different memory areas. You must allocate appropriate memory areas for these operations, and define all the ``X_RAM_CHECK`` functions that will give the benchmark access to these areas. See `RAM Tests: t_core_ram.c`_ and `RAM Benchs: t_core_ram.c`_ for more information.
+   * **Run CoreMark**: Call CoreMark's main function in ``X_CORE_BENCHMARK_run``. This function should only call ``core_main``, and return ``true`` if CoreMark was run properly.
+
+#. Implement other functions required by the benchmark:
+
+   * :code:`int printf(const char* format, ...)` is required to output the benchmark results. If this function is not already defined, or if its ouptut is not visible, you will need to define your own version of it.
+   * :code:`int64_t UTIL_TIME_BASE_getTime()` (declared in ``u_time_base.h``) must return the current time, in microseconds. You can call ``microej_time_get_time_nanos``, which should already be defined in your BSP project, as it is required for the platform to run.
+   * :code:`void UTIL_TIME_BASE_initialize()` (declared in ``u_time_base.h``) should contain any necessary initialization step required for ``UTIL_TIME_BASE_getTime`` to perform its task.
+
+#. Locate the call to ``microej_main`` in the BSP project. Include the ``t_core_main.h`` header file in this file, and add a call to the function ``T_CORE_main`` just before the call to ``microej_main``.
+#. In the MicroEJ SDK, import the MicroEJ project ``java-testsuite-runner-core`` from the folder ``tests/core``.
+#. Follow `MicroEJ Core Validation Readme <java-testsuite-runner-core/README.rst>`_ and build this MicroEJ Application against the MicroEJ Platform to qualify.
+#. Build the BSP and link it with the MicroEJ Platform runtime library and MicroEJ Application.
 
 Expected Results
 ----------------
@@ -106,15 +131,16 @@ Expected Results
    CoreMark 1.0 : 497.815544 / ARMCC V5.06 update 4 (build 422) -c --cpu Cortex-M4.fp -D__MICROLIB -g -O3 -Otime --apcs=interwork --split_sections -D__UVISION_VERSION="523" -D_RTE_ -DSTM32L496xx -DUSE_HAL_DRIVER -DSTM32L496xx / STATIC
 
    OK (27 tests)
-   VM START
+   MicroEJ START
    *****************************************************************************************************
-   *                                  MicroEJ Core Validation - 3.1.0                                  *
+   *                                  MicroEJ Core Validation - 3.2.0                                  *
    *****************************************************************************************************
-   * Copyright 2013-2022 MicroEJ Corp. All rights reserved.                                            *
+   * Copyright 2013-2023 MicroEJ Corp. All rights reserved.                                            *
    * Use of this source code is governed by a BSD-style license that can be found with this software.  *
    *****************************************************************************************************
    
    -> Check visible clock (LLMJVM_IMPL_getCurrentTime validation)...
+   Property 'com.microej.core.tests.max.allowed.clock.tick.duration.milliseconds' is not set (default to '20' millisecondss)
    Property 'com.microej.core.tests.clock.seconds' is not set (default to '10' seconds)
    1
    2
@@ -128,6 +154,7 @@ Expected Results
    10
    OK: testVisibleClock
    -> Check schedule request and wakeup (LLMJVM_IMPL_scheduleRequest and LLMJVM_IMPL_wakeupVM validation)...
+   Property 'com.microej.core.tests.max.allowed.clock.tick.duration.milliseconds' is not set (default to '20' millisecondss)
    Waiting for 5s...
    ...done
    OK: testTime
@@ -159,10 +186,18 @@ Expected Results
    OK: testIsInReadOnlyMemory
    -> Check FPU (soft/hard FP option)...
    OK: testFPU
+   -> Check floating-point arithmetic with NaN...
+   -> Check floating-point arithmetic with 0.0 and -0.0...
+   -> Check floating-point arithmetic with infinity...
+   -> Check floating-point arithmetic with min values...
+   -> Check floating-point division by 0.0...
+   -> Check floating-point Math functions...
+   -> Check integer arithmetic...
+   OK: testFloatingPointArithmetic
    -> Check floating-point parser...
-   OK: testParseFP
+   OK: testParseFloatingPoint
    -> Check floating-point formatter...
-   OK: testFormatFP
+   OK: testFormatFloatingPoint
    -> Check parsing a string as a double ; in some systems such operations may allocate memory in the C heap (strtod, strtof, malloc implementation)...
    OK: testParseDoubleStringHeap
    Property 'com.microej.core.tests.monotonic.time.check.seconds' is not set (default to '60' seconds)
@@ -172,14 +207,16 @@ Expected Results
    -> Check current time clock tick duration (LLMJVM_IMPL_getCurrentTime, LLMJVM_IMPL_getTimeNanos)...
    Property 'com.microej.core.tests.max.allowed.clock.tick.duration.milliseconds' is not set (default to '20' millisecondss)
    Estimated LLMJVM_IMPL_getCurrentTime clock tick is 1 ms.
-   Estimated LLMJVM_IMPL_getTimeNanos clock tick is lower than 30518 ns.
+   Estimated LLMJVM_IMPL_getTimeNanos clock tick is lower than 4000 ns.
    OK: testSystemCurrentTimeClockTick
    -> Check schedule request clock tick duration (LLMJVM_IMPL_scheduleRequest)...
    Property 'com.microej.core.tests.max.allowed.clock.tick.duration.milliseconds' is not set (default to '20' millisecondss)
    Estimated LLMJVM_IMPL_scheduleRequest clock tick is 1 ms.
    OK: testScheduleRequestClockTick
-   PASSED: 13  
-   VM END (exit code = 0)
+   -> Check SNI native calling convention (ABI)...
+   OK: testSniAbi
+   PASSED: 15
+   MicroEJ END (exit code = 0)
 
 --------------
 

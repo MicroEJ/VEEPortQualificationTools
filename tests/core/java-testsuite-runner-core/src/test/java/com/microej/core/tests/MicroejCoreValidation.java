@@ -1,7 +1,7 @@
 /*
  * Java
  *
- * Copyright 2013-2022 MicroEJ Corp. All rights reserved.
+ * Copyright 2013-2023 MicroEJ Corp. All rights reserved.
  * Use of this source code is governed by a BSD-style license that can be found with this software.
  */
 package com.microej.core.tests;
@@ -35,7 +35,7 @@ import ej.bon.Util;
  */
 public class MicroejCoreValidation {
 
-	private static final String VERSION = "3.1.0";
+	private static final String VERSION = "3.2.0";
 
 	private static final String PROPERTY_SUFFIX = "com.microej.core.tests.";
 	private static final String OPTION_CLOCK_NB_SECONDS = "clock.seconds";
@@ -48,7 +48,7 @@ public class MicroejCoreValidation {
 	private static final int DEFAULT_MAX_ALLOWED_CLOCK_TICK_DURATION_MS = 20;
 
 	private static final String INVALID_C_FUNCTION_MESSAGE = "C function not correctly implemented (check your libc configuration)";
-	private static final String INCOHERENT_FPU_MESSAGE = "FPU option is not coherent between MicroEJ Platform and BSP";
+	private static final String INCOHERENT_FPU_MESSAGE = "FPU option is not coherent between MicroEJ Core and BSP";
 
 	private static Class<MicroejCoreValidation> THIS_CLASS = MicroejCoreValidation.class;
 
@@ -65,8 +65,22 @@ public class MicroejCoreValidation {
 	// Set this fields volatile so we are sure accesses are not optimized
 	volatile private static double double3 = 3d;
 	volatile private static double double4 = 4d;
+	volatile private static double doubleNaN = Double.NaN;
+	volatile private static double doubleZero = 0.0;
+	volatile private static double doubleNegativeZero = -0.0;
+	volatile private static double doublePositiveInfinity = Double.POSITIVE_INFINITY;
+	volatile private static double doubleNegativeInfinity = Double.NEGATIVE_INFINITY;
 	volatile private static float float3 = 3f;
 	volatile private static float float4 = 4f;
+	volatile private static float floatNaN = Float.NaN;
+	volatile private static float floatZero = 0.0f;
+	volatile private static float floatNegativeZero = -0.0f;
+	volatile private static float floatPositiveInfinity = Float.POSITIVE_INFINITY;
+	volatile private static float floatNegativeInfinity = Float.NEGATIVE_INFINITY;
+	volatile private static int intMin = Integer.MIN_VALUE;
+	volatile private static int intNegativeOne = -1;
+	volatile private static long longMin = Long.MIN_VALUE;
+	volatile private static long longNegativeOne = -1l;
 
 	// testParseDoubleStringHeap: tolerance value for float comparison
 	private static final float FLOAT_COMPARISON_TOLERANCE_PERCENT = 0.01f;
@@ -78,7 +92,7 @@ public class MicroejCoreValidation {
 				+ "                                  *");
 		System.out.println(sep);
 		System.out.println(
-				"* Copyright 2013-2022 MicroEJ Corp. All rights reserved.                                            *");
+				"* Copyright 2013-2023 MicroEJ Corp. All rights reserved.                                            *");
 		System.out.println(
 				"* Use of this source code is governed by a BSD-style license that can be found with this software.  *");
 		System.out.println(sep);
@@ -218,10 +232,6 @@ public class MicroejCoreValidation {
 
 		return objects;
 	}
-
-	private static native float testFloat(float a, float b);
-
-	private static native double testDouble(double a, double b);
 
 	private static float testFPUJava(float a, float b) {
 		return a * b;
@@ -502,7 +512,7 @@ public class MicroejCoreValidation {
 	}
 
 	/**
-	 * Tests the platform FPU configuration.
+	 * Tests the VEE Port FPU configuration.
 	 */
 	@Test
 	public void testFPU() {
@@ -519,10 +529,157 @@ public class MicroejCoreValidation {
 	}
 
 	/**
-	 * Tests the platform FP parser.
+	 * Tests the VEE Port floating-point arithmetic.
 	 */
 	@Test
-	public void testParseFP() {
+	public void testFloatingPointArithmetic() {
+		System.out.println("-> Check floating-point arithmetic with NaN...");
+
+		boolean allOk = true;
+
+		allOk &= checkTrue("test 'NaN + float' returns NaN", Float.isNaN(floatNaN + float3));
+		allOk &= checkTrue("test 'NaN - float' returns NaN", Float.isNaN(floatNaN - float3));
+		allOk &= checkTrue("test 'NaN / float' returns NaN", Float.isNaN(floatNaN / float3));
+		allOk &= checkTrue("test 'NaN * float' returns NaN", Float.isNaN(floatNaN * float3));
+		allOk &= checkTrue("test 'NaN % float' returns NaN", Float.isNaN(floatNaN % float3));
+		allOk &= checkTrue("test '(double)Float.NaN' returns NaN", Double.isNaN(floatNaN));
+		allOk &= checkEquals("test '(int)Float.NaN' returns 0", 0, (int) floatNaN);
+		allOk &= checkEquals("test '(long)Float.NaN' returns 0", 0, (long) floatNaN);
+
+		allOk &= checkTrue("test 'NaN + double' returns NaN", Double.isNaN(doubleNaN + double3));
+		allOk &= checkTrue("test 'NaN - double' returns NaN", Double.isNaN(doubleNaN - double3));
+		allOk &= checkTrue("test 'NaN / double' returns NaN", Double.isNaN(doubleNaN / double3));
+		allOk &= checkTrue("test 'NaN * double' returns NaN", Double.isNaN(doubleNaN * double3));
+		allOk &= checkTrue("test 'NaN % double' returns NaN", Double.isNaN(doubleNaN % double3));
+		allOk &= checkTrue("test '(float)Double.NaN' returns NaN", Float.isNaN((float) doubleNaN));
+		allOk &= checkEquals("test '(int)Double.NaN' returns 0", 0, (int) doubleNaN);
+		allOk &= checkEquals("test '(long)Double.NaN' returns 0", 0, (long) doubleNaN);
+
+		System.out.println("-> Check floating-point arithmetic with 0.0 and -0.0...");
+		allOk &= checkTrue("test 'float % 0.0' returns NaN", Float.isNaN(float3 % floatZero));
+		allOk &= checkTrue("test 'float % -0.0' returns NaN", Float.isNaN(float3 % floatNegativeZero));
+		allOk &= checkTrue("test 'double % 0.0' returns NaN", Double.isNaN(double3 % doubleZero));
+		allOk &= checkTrue("test 'double % -0.0' returns NaN", Double.isNaN(double3 % doubleNegativeZero));
+
+		allOk &= checkTrue("test 'inf * 0.0f' returns NaN", Float.isNaN(floatPositiveInfinity * floatZero));
+		allOk &= checkEquals("test 'float * -0.0' returns -0.0", 0, Float.compare(-0.0f, (float3 * floatNegativeZero)));
+		allOk &= checkEquals("test 'float * 0.0' returns 0.0", 0, Float.compare(0.0f, (float3 * floatZero)));
+		allOk &= checkEquals("test '-float * -0.0' returns 0.0", 0, Float.compare(0.0f, (-float3 * floatNegativeZero)));
+		allOk &= checkEquals("test '-float * 0.0' returns -0.0", 0, Float.compare(-0.0f, (-float3 * floatZero)));
+		allOk &= checkTrue("test 'inf * 0.0d' returns NaN", Double.isNaN(doublePositiveInfinity * doubleZero));
+		allOk &= checkEquals("test 'double * -0.0' returns -0.0", 0,
+				Double.compare(-0.0, (double3 * doubleNegativeZero)));
+		allOk &= checkEquals("test 'double * 0.0' returns 0.0", 0, Double.compare(0.0, (double3 * doubleZero)));
+		allOk &= checkEquals("test '-double * -0.0' returns 0.0", 0,
+				Double.compare(0.0, (-double3 * doubleNegativeZero)));
+		allOk &= checkEquals("test '-double * 0.0' returns -0.0", 0, Double.compare(-0.0, (-double3 * doubleZero)));
+
+		allOk &= checkEquals("test '-0.0f + 0.0f' returns 0.0f", 0, Float.compare(0.0f, floatNegativeZero + floatZero));
+		allOk &= checkEquals("test '-0.0f - -0.0f' returns 0.0f", 0,
+				Float.compare(0.0f, floatNegativeZero - floatNegativeZero));
+		allOk &= checkEquals("test '-0.0d + 0.0d' returns 0.0d", 0,
+				Double.compare(0.0d, doubleNegativeZero + doubleZero));
+		allOk &= checkEquals("test '-0.0d - -0.0d' returns 0.0d", 0,
+				Double.compare(0.0d, doubleNegativeZero - doubleNegativeZero));
+
+		allOk &= checkEquals("test '(float)-0.0d' returns -0.0f", 0, Float.compare(-0.0f, (float) doubleNegativeZero));
+		allOk &= checkEquals("test '(double)-0.0f' returns -0.0d", 0, Double.compare(-0.0, floatNegativeZero));
+
+		System.out.println("-> Check floating-point arithmetic with infinity...");
+		allOk &= checkTrue("test '+inf % float' returns NaN", Float.isNaN(floatPositiveInfinity % float3));
+		allOk &= checkTrue("test '-inf % float' returns NaN", Float.isNaN(floatNegativeInfinity % float3));
+		allOk &= checkTrue("test '-inf + float' returns -inf",
+				(floatNegativeInfinity + float3) == Float.NEGATIVE_INFINITY);
+		allOk &= checkTrue("test '+inf + -float' returns +inf",
+				(floatPositiveInfinity + -float3) == Float.POSITIVE_INFINITY);
+		allOk &= checkTrue("test '(double)+inf' returns +inf", floatPositiveInfinity == Double.POSITIVE_INFINITY);
+		allOk &= checkTrue("test '(double)-inf' returns -inf", floatNegativeInfinity == Double.NEGATIVE_INFINITY);
+
+		allOk &= checkTrue("test '+inf % double' returns NaN", Double.isNaN(doublePositiveInfinity % double3));
+		allOk &= checkTrue("test '-inf % double' returns NaN", Double.isNaN(doubleNegativeInfinity % double3));
+		allOk &= checkTrue("test '-inf + double' returns -inf",
+				(doubleNegativeInfinity + double3) == Double.NEGATIVE_INFINITY);
+		allOk &= checkTrue("test '+inf + -double' returns +inf",
+				(doublePositiveInfinity + -double3) == Double.POSITIVE_INFINITY);
+		allOk &= checkTrue("test '(float)+inf' returns +inf",
+				(float) doublePositiveInfinity == Float.POSITIVE_INFINITY);
+		allOk &= checkTrue("test '(float)-inf' returns -inf",
+				(float) doubleNegativeInfinity == Float.NEGATIVE_INFINITY);
+
+		System.out.println("-> Check floating-point arithmetic with min values...");
+		allOk &= checkTrue("test 'min % float' returns min", (Float.MIN_VALUE % float3) == Float.MIN_VALUE);
+		allOk &= checkTrue("test 'min % double' returns min", (Double.MIN_VALUE % float3) == Double.MIN_VALUE);
+
+		System.out.println("-> Check floating-point division by 0.0...");
+		allOk &= checkTrue("test '0.0f / 0.0f' returns NaN", Float.isNaN(floatZero / floatZero));
+		allOk &= checkTrue("test 'float / 0.0' returns +inf", (float3 / floatZero) == Float.POSITIVE_INFINITY);
+		allOk &= checkTrue("test 'float / -0.0' returns -inf", (float3 / floatNegativeZero) == Float.NEGATIVE_INFINITY);
+		allOk &= checkTrue("test '-float / 0.0' returns -inf", (-float3 / floatZero) == Float.NEGATIVE_INFINITY);
+		allOk &= checkTrue("test '-float / -0.0' returns +inf",
+				(-float3 / floatNegativeZero) == Float.POSITIVE_INFINITY);
+
+		allOk &= checkTrue("test '0.0d / 0.0d' returns NaN", Double.isNaN(doubleZero / doubleZero));
+		allOk &= checkTrue("test 'double / 0.0' returns +inf", (double3 / doubleZero) == Double.POSITIVE_INFINITY);
+		allOk &= checkTrue("test 'double / -0.0' returns -inf",
+				(double3 / doubleNegativeZero) == Double.NEGATIVE_INFINITY);
+		allOk &= checkTrue("test '-double / 0.0' returns -inf", (-double3 / doubleZero) == Double.NEGATIVE_INFINITY);
+		allOk &= checkTrue("test '-double / -0.0' returns +inf",
+				(-double3 / doubleNegativeZero) == Double.POSITIVE_INFINITY);
+
+		System.out.println("-> Check floating-point Math functions...");
+		allOk &= checkTrue("test 'log1p(-3)' returns NaN", Double.isNaN(Math.log1p(-double3)));
+		allOk &= checkTrue("test 'sqrt(neg)' returns NaN", Double.isNaN(Math.sqrt(-double3)));
+		allOk &= checkTrue("test 'IEEEremainder(double, 0.0)' returns NaN",
+				Double.isNaN(Math.IEEEremainder(double3, doubleZero)));
+		allOk &= checkTrue("test 'IEEEremainder(double, -0.0)' returns NaN",
+				Double.isNaN(Math.IEEEremainder(double3, doubleNegativeZero)));
+		allOk &= checkTrue("test 'cos(NaN)' returns NaN", Double.isNaN(Math.cos(doubleNaN)));
+		allOk &= checkTrue("test 'cos(+inf)' returns NaN", Double.isNaN(Math.cos(doublePositiveInfinity)));
+		allOk &= checkTrue("test 'cos(-inf)' returns NaN", Double.isNaN(Math.cos(doubleNegativeInfinity)));
+		allOk &= checkTrue("test 'sin(NaN)' returns NaN", Double.isNaN(Math.sin(doubleNaN)));
+		allOk &= checkTrue("test 'sin(+inf)' returns NaN", Double.isNaN(Math.sin(doublePositiveInfinity)));
+		allOk &= checkTrue("test 'sin(-inf)' returns NaN", Double.isNaN(Math.sin(doubleNegativeInfinity)));
+		allOk &= checkTrue("test 'tan(NaN)' returns NaN", Double.isNaN(Math.tan(doubleNaN)));
+		allOk &= checkTrue("test 'tan(+inf)' returns NaN", Double.isNaN(Math.tan(doublePositiveInfinity)));
+		allOk &= checkTrue("test 'tan(-inf)' returns NaN", Double.isNaN(Math.tan(doubleNegativeInfinity)));
+		allOk &= checkTrue("test 'acos(NaN)' returns NaN", Double.isNaN(Math.acos(doubleNaN)));
+		allOk &= checkTrue("test 'asin(NaN)' returns NaN", Double.isNaN(Math.asin(doubleNaN)));
+		allOk &= checkTrue("test 'atan(NaN)' returns NaN", Double.isNaN(Math.atan(doubleNaN)));
+
+		System.out.println("-> Check integer arithmetic...");
+		allOk &= checkEquals("test 'INT_MIN / -1' returns INT_MIN", Integer.MIN_VALUE, intMin / intNegativeOne);
+		allOk &= checkEquals("test 'INT_MIN % -1' returns INT_MIN", 0, intMin % intNegativeOne);
+		allOk &= checkEquals("test 'LONG_MIN / -1' returns LONG_MIN", Long.MIN_VALUE, longMin / longNegativeOne);
+		allOk &= checkEquals("test 'LONG_MIN % -1' returns LONG_MIN", 0, longMin % longNegativeOne);
+
+		assertTrue(allOk);
+	}
+
+	private static boolean checkTrue(String message, boolean condition) {
+		try {
+			assertTrue(message, condition);
+			return true;
+		} catch (AssertionError error) {
+			System.out.println("Assertion failed: " + error.getMessage());
+			return false;
+		}
+	}
+
+	private static boolean checkEquals(String message, long expected, long actual) {
+		try {
+			assertEquals(message, expected, actual);
+			return true;
+		} catch (AssertionError error) {
+			System.out.println("Assertion failed: " + error.getMessage());
+			return false;
+		}
+	}
+
+	/**
+	 * Tests the VEE Port floating-point parser.
+	 */
+	@Test
+	public void testParseFloatingPoint() {
 		System.out.println("-> Check floating-point parser...");
 
 		float parsedFloat = Float.parseFloat("1234.5");
@@ -534,13 +691,23 @@ public class MicroejCoreValidation {
 		double expectedDouble = 1234.5;
 		assertEquals("test 'parse double string': strtod " + INVALID_C_FUNCTION_MESSAGE, expectedDouble, parsedDouble,
 				getAssertDoubleDelta(expectedDouble));
+
+		float parsedFloatScientific = Float.parseFloat("9.82E-22");
+		float expectedFloatScientific = 9.82E-22f;
+		assertEquals("test 'parse float string scientific notation': strtof " + INVALID_C_FUNCTION_MESSAGE,
+				expectedFloatScientific, parsedFloatScientific, getAssertFloatDelta(expectedFloatScientific));
+
+		double parsedDoubleScientific = Double.parseDouble("1.25E128");
+		double expectedDoubleScientific = 1.25E128;
+		assertEquals("test 'parse double string scientific notation': strtod " + INVALID_C_FUNCTION_MESSAGE,
+				expectedDoubleScientific, parsedDoubleScientific, getAssertDoubleDelta(expectedDoubleScientific));
 	}
 
 	/**
-	 * Tests the platform FP formatter.
+	 * Tests the VEE Port floating-point formatter.
 	 */
 	@Test
-	public void testFormatFP() {
+	public void testFormatFloatingPoint() {
 		System.out.println("-> Check floating-point formatter...");
 
 		String floatToString = Float.toString(1234.5f);
@@ -548,6 +715,18 @@ public class MicroejCoreValidation {
 
 		String doubleToString = Double.toString(1234.5d);
 		assertEquals("test 'double to string': snprintf " + INVALID_C_FUNCTION_MESSAGE, "1234.5", doubleToString);
+
+		String floatScientificToString = Float.toString(1.11E-22f);
+		assertTrue(
+				"test 'float to string scientific notation (toString(1.11E-22f) is '" + floatScientificToString
+						+ "')': snprintf " + INVALID_C_FUNCTION_MESSAGE,
+				floatScientificToString.startsWith("1.1") && floatScientificToString.endsWith("E-22"));
+
+		String doubleScientificToString = Double.toString(1.11E128d);
+		assertTrue(
+				"test 'double to string scientific notation (toString(1.11E128d) is '" + doubleScientificToString
+						+ "')': snprintf " + INVALID_C_FUNCTION_MESSAGE,
+				doubleScientificToString.startsWith("1.1") && doubleScientificToString.endsWith("E128"));
 	}
 
 	/**
@@ -677,6 +856,7 @@ public class MicroejCoreValidation {
 		// Check LLMJVM_IMPL_getCurrentTime
 		t0 = System.currentTimeMillis();
 		while ((t1 = System.currentTimeMillis()) == t0) {
+			// Nothing to do
 		}
 		precision = t1 - t0;
 		System.out.println("Estimated LLMJVM_IMPL_getCurrentTime clock tick is " + precision + " ms.");
@@ -693,7 +873,7 @@ public class MicroejCoreValidation {
 		} else {
 			t0 = System.nanoTime();
 			while ((t1 = System.nanoTime()) == t0) {
-
+				// Nothing to do
 			}
 			precision = t1 - t0;
 			long precisionLimitNs = precisionLimitMs * 1000000l;
@@ -731,6 +911,40 @@ public class MicroejCoreValidation {
 		} catch (InterruptedException e) {
 			throw new Error();
 		}
+	}
+
+	/**
+	 * Checks SNI calling convention ABI.
+	 */
+	@Test
+	public void testSniAbi() {
+		System.out.println("-> Check SNI native calling convention (ABI)...");
+
+		boolean allOk = true;
+
+		int res01 = testNativeArguments01(0x01020304, 0x05060708, 0x090A0B0C, 0x0D0E0F10, 0x11121314, 0x15161718,
+				0x191A1B1C, 0x1D1E1F20, 0x21222324, 0x25262728);
+		allOk &= checkTrue("test int32_t SNI arguments", res01 == 0x292A2B2C);
+
+		long res02 = testNativeArguments02(0x2D2E2F3031323334l, 0x35363738393A3B3Cl, 0x3D3E3F4041424344l,
+				0x45464748494A4B4Cl, 0x4D4E4F5051525354l, 0x55565758595A5B5Cl, 0x5D5E5F6061626364l, 0x65666768696A6B6Cl,
+				0x6D6E6F7071727374l, 0x75767778797A7B7Cl);
+		allOk &= checkTrue("test int64_t SNI arguments", res02 == 0x7D7E7F8081828384l);
+
+		long res03 = testNativeArguments03(0x85868788, 0x898A8B8C8D8E8F90l, 0x91929394, 0x95969798999A9B9Cl, 0x9D9E9FA0,
+				0xA1A2A3A4A5A6A7A8l, 0xA9AAABAC, 0xADAEAFB0B1B2B3B4l, 0xB5B6B7B8, 0xB9BABBBCBDBEBFC0l);
+		allOk &= checkTrue("test int32_t/int64_t SNI arguments", res03 == 0xC1C2C3C4C5C6C7C8l);
+
+		float res04 = testNativeArguments04(1.0f, 1.1f, 1.2f, 1.3f, 1.4f, 1.5f, 1.6f, 1.7f, 1.8f, 1.9f);
+		allOk &= checkTrue("test float SNI arguments", res04 == 2.0f);
+
+		double res05 = testNativeArguments05(2.0d, 2.1d, 2.2d, 2.3d, 2.4d, 2.5d, 2.6d, 2.7d, 2.8d, 2.9d);
+		allOk &= checkTrue("test double SNI arguments", res05 == 3.0d);
+
+		double res06 = testNativeArguments06(3.0f, 3.1d, 3.2f, 3.3d, 3.4f, 3.5d, 3.6f, 3.7d, 3.8f, 3.9d);
+		allOk &= checkTrue("test float/double SNI arguments", res06 == 4.0d);
+
+		assertTrue(allOk);
 	}
 
 	/**
@@ -806,5 +1020,29 @@ public class MicroejCoreValidation {
 		}
 
 	}
+
+	// See instructions in README.rst for the implementation of the following native methods.
+
+	private static native float testFloat(float a, float b);
+
+	private static native double testDouble(double a, double b);
+
+	private static native int testNativeArguments01(int i1, int i2, int i3, int i4, int i5, int i6, int i7, int i8,
+			int i9, int i10);
+
+	private static native long testNativeArguments02(long l1, long l2, long l3, long l4, long l5, long l6, long l7,
+			long l8, long l9, long l10);
+
+	private static native long testNativeArguments03(int i1, long l2, int i3, long l4, int i5, long l6, int i7, long l8,
+			int i9, long l10);
+
+	private static native float testNativeArguments04(float f1, float f2, float f3, float f4, float f5, float f6,
+			float f7, float f8, float f9, float f10);
+
+	private static native double testNativeArguments05(double d1, double d2, double d3, double d4, double d5, double d6,
+			double d7, double d8, double d9, double d10);
+
+	private static native double testNativeArguments06(float f1, double d2, float f3, double d4, float f5, double d6,
+			float f7, double d8, float f9, double d10);
 
 }
