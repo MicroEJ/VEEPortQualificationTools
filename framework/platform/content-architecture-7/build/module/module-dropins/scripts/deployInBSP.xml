@@ -2,7 +2,7 @@
 <!-- 
 	ANT
 	
-	Copyright 2015-2021 MicroEJ Corp. All rights reserved.
+	Copyright 2015-2023 MicroEJ Corp. All rights reserved.
 	Use of this source code is governed by a BSD-style license that can be found with this software.
 -->
 
@@ -195,8 +195,15 @@
 		/>
 		
 	</target>
-	
-	<target name="deployInBSP:exec:script:dir" extensionOf="deployInBSP:copy:custom" depends="deployInBSP:copy:app:dir,deployInBSP:copy:lib:dir,deployInBSP:copy:inc:dir" if="deploy.bsp.microejscript.dir">
+
+        <!--
+                Convert .sh files to Unix-style line endings.
+        -->
+        <target name="deployInBSP:convert:scripts:dir" extensionOf="deployInBSP:copy:custom">
+                <fixcrlf srcdir="${deploy.bsp.root.dir.computed}/${deploy.bsp.microejscript.relative.dir}" includes="*.sh" eol="unix" />
+        </target>
+
+	<target name="deployInBSP:exec:script:dir" extensionOf="deployInBSP:copy:custom" depends="deployInBSP:copy:app:dir,deployInBSP:copy:lib:dir,deployInBSP:copy:inc:dir,deployInBSP:convert:scripts:dir" if="deploy.bsp.microejscript.dir">
 		<property name="deploy.bsp.microejscript.name" value="build"/>
 		<condition property="deploy.bsp.microejscript.extension" value="bat" else="sh">
 			<os family="windows"/>
@@ -214,10 +221,10 @@
 		<echo message="Execution of script '${deploy.bsp.microejscript.filename}' started..."/>
 
 		<exec dir="${application.output.dir}" executable="${deploy.bsp.microejscript.filename}" failonerror="true" osfamily="windows" />
-        <!-- OS family `unix` matches on both Linux and MacOS. -->
-        <exec dir="${application.output.dir}" executable="/bin/bash" failonerror="true" osfamily="unix">
-          <arg value="${deploy.bsp.microejscript.filename}" />
-        </exec>
+		<!-- OS family `unix` matches on both Linux and MacOS. -->
+		<exec dir="${application.output.dir}" executable="/bin/bash" failonerror="true" osfamily="unix">
+			<arg value="${deploy.bsp.microejscript.filename}" />
+		</exec>
 
 		<echo message="Execution of script '${deploy.bsp.microejscript.filename}' done."/>
 	</target>			

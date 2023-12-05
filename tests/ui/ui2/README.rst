@@ -1,12 +1,12 @@
 .. ReStructuredText
-.. Copyright 2019-2022 MicroEJ Corp.  MicroEJ Corp. All rights reserved.
+.. Copyright 2019-2023 MicroEJ Corp.  MicroEJ Corp. All rights reserved.
 .. Use of this source code is governed by a BSD-style license that can be found with this software.
 
 ***********************************
 Graphical User Interface Test Suite
 ***********************************
 
-This folder contains a ready-to-use project for testing the `Graphical User Interface<https://docs.microej.com/en/latest/PlatformDeveloperGuide/ui.html>`_ implementation on a device.
+This folder contains a ready-to-use project for testing the `Graphical User Interface <https://docs.microej.com/en/latest/PlatformDeveloperGuide/ui.html>`_ implementation on a device.
 This Test Suite will check the drivers and implementation of LLAPI ``LLDisplay``.
 
 **Note**: These tests only concern the MicroEJ Platforms made against the MicroEJ UI Packs [6.0.0-13.0.0[ (13.0.0 excluded). For the newer MicroEJ UI packs, see `UI3 Readme <../ui3/README.rst>`_ .

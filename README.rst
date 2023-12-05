@@ -35,6 +35,13 @@ All other Test Suites assume the CORE Test Suite is validated.
 
 See `CORE Readme <tests/core/README.rst>`_
 
+Multi-Sandbox Test Suite
+------------------------
+
+The Multi-Sandbox Test Suite contains a C Test Suite. It ensures MicroEJ Multi-Sandbox features install/uninstall flow will run correctly.
+
+See `Multi-Sandbox Readme <tests/llkernel/README.rst>`_
+
 Graphical User Interface Test Suite
 -----------------------------------
 
@@ -42,6 +49,13 @@ The UI Test Suite is a Java Test Suite. It tests the implementation of the ``LLU
 It also provides indication about the minimum draw time allowed to display animations at a given framerate.
 
 See `UI Readme <tests/ui/README.rst>`_
+
+Vector Graphics Test Suite
+--------------------------
+
+The VG Test Suite is a Java Test Suite. It checks the implementation of the ``LLVG*`` API over a vector GPU.
+
+See `VG Readme <tests/vg/README.rst>`_
 
 Filesystem Test Suite
 ---------------------
@@ -84,6 +98,20 @@ ECOM-WIFI Test Suite
 The ECOM-WIFI Test Suite is a Java Test Suite.
 
 See `ECOM-WIFI Readme <tests/ecom-wifi/README.rst>`_
+
+Event Queue Test Suite
+--------------------
+
+The Event Queue Test Suite is a Java Test Suite.
+
+See `Event Queue Readme <tests/event-queue/README.rst>`_
+
+External Resource Loader Test Suite
+-----------------------------------
+
+The External Resource Loader Test Suite is a Java Test Suite.
+
+See `External Resource Loader Readme <tests/ext-res-loader/README.rst>`_
 
 Platform Qualification Tools Overview
 =====================================

@@ -47,26 +47,31 @@ Configuration
 
 #. Port EEMBC CoreMark (http://www.eembc.org/coremark/index.php) to your platform:
 
-   * Pick one of the provided skeleton configuration folders located in ``framework/c/CoreMark/`` (*barebones* is a good choice, but one of the other folders may match your project better). Copy its source files into your BSP project and make sure they will be compiled/included.
-   * Define the constants and functions required by CoreMark. What needs to be defined will depend on the configuration skeleton you picked, but CoreMark will at least require a clock and a text output. If you chose the *barebones* skeleton configuration, you will need to define the following:
+   - Pick one of the provided skeleton configuration folders located in ``framework/c/CoreMark/`` (*barebones* is a good choice, but one of the other folders may match your project better). Copy its source files into your BSP project and make sure they will be compiled/included.
 
-      * In ``core_portme.h``:
+   - Define the constants and functions required by CoreMark. What needs to be defined will depend on the configuration skeleton you picked, but CoreMark will at least require a clock and a text output. If you chose the *barebones* skeleton configuration, you will need to define the following:
 
-         * Define the ``ITERATIONS`` constant as a number of iterations high enough to keep the benchmark running for at least 10 seconds. You will have to adjust its value depending on the hardware and according to the benchmark report, but ``1000`` is a good starting point.
-         * Define the ``CLOCKS_PER_SEC`` as the frequency of your platform's clock ticks. CoreMark needs to be provided a clock to measure the time taken by the benchmarked operations. This constant will be used to convert the clock tick count to a value in seconds.
-         * Define the ``TIMER_RES_DIVIDER`` constant. Its value will be used to prevent overflows of the clock tick count, but will reduce the time measurement resolution in return. Unless the resolution of your clock is too high and you experience integer overflows, you can set this constant to ``1``.
-         * Go over the whole file and edit constants as needed for your platform. Specifically, you may want to edit the compiler version and flags, as well as some type definitions.
+     - In ``core_portme.h``:
 
-      * In ``core_portme.c``:
+       - Define the ``ITERATIONS`` constant as a number of iterations high enough to keep the benchmark running for at least 10 seconds. You will have to adjust its value depending on the hardware and according to the benchmark report, but ``1000`` is a good starting point.
 
-         * Implement ``barebones_clock`` to return the current time, measured in clock ticks. A clock frequency of 1 kHz is sufficient for CoreMark's measurements. You may use ``microej_time_get_current_time``, which should already be defined as it is required for the platform to run.
-         * Add any needed initialization step to ``portable_init``. Namely, you might need to initialize the UART output there (if it is not yet initialized when reaching this point).
+         - Define the ``CLOCKS_PER_SEC`` as the frequency of your platform's clock ticks. CoreMark needs to be provided a clock to measure the time taken by the benchmarked operations. This constant will be used to convert the clock tick count to a value in seconds.
 
-      * In ``ee_printf.c``:
+         - Define the ``TIMER_RES_DIVIDER`` constant. Its value will be used to prevent overflows of the clock tick count, but will reduce the time measurement resolution in return. Unless the resolution of your clock is too high and you experience integer overflows, you can set this constant to ``1``. 
 
-         * Implement ``uart_send_char`` to send a single character through the UART output.
+         - Go over the whole file and edit constants as needed for your platform. Specifically, you may want to edit the compiler version and flags, as well as some type definitions.
 
-   * Finally, insert the directive line :code:`#define main core_main` in ``core_portme.h`` so that the BSP's main function does not conflict with CoreMark's main function.
+     - In ``core_portme.c``:
+
+       - Implement ``barebones_clock`` to return the current time, measured in clock ticks. A clock frequency of 1 kHz is sufficient for CoreMark's measurements. You may use ``microej_time_get_current_time``, which should already be defined as it is required for the platform to run.
+
+       - Add any needed initialization step to ``portable_init``. Namely, you might need to initialize the UART output there (if it is not yet initialized when reaching this point).
+
+     - In ``ee_printf.c``:
+
+       - Implement ``uart_send_char`` to send a single character through the UART output.
+
+   - Finally, insert the directive line :code:`#define main core_main` in ``core_portme.h`` so that the BSP's main function does not conflict with CoreMark's main function.
 
 #. Define all functions declared in ``x_ram_checks.h`` and ``x_core_benchmark.h``.
 

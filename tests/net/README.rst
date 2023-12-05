@@ -1,5 +1,5 @@
 ..
-	Copyright 2020-2022 MicroEJ Corp. All rights reserved.
+	Copyright 2020-2023 MicroEJ Corp. All rights reserved.
 	Use of this source code is governed by a BSD-style license that can be found with this software.
 ..
 
@@ -43,30 +43,31 @@ The NET Test Suite requires specific properties depending on the implementation 
 All the properties described in this section are defined in the file `microej-testsuite-common.properties <java-testsuite-runner-net/validation/microej-testsuite-common.properties>`_
 and prefixed by ``microej.java.property.``.
 
-- Common properties:
+Common properties:
 
-  - ``testsuite.preferipv6`` (optional, false by default): set to true if the tests must use IPv6 by default.
-  - To use the service for the WiFi initialization add the following dependency in your ``module.ivy``: ``<dependency org="com.microej.pack.net" name="net-1_1-testsuite-wifi" rev="2.1.0"/>``.
-    - WiFi SSID and passphrase are set with respectively with the properties ``wifi.ssid`` and ``wifi.passphrase``.
+- ``testsuite.preferipv6`` (optional, false by default): set to true if the tests must use IPv6 by default.
+- To use the service for the WiFi initialization add the following dependency in your ``module.ivy``: ``<dependency org="com.microej.pack.net" name="net-1_1-testsuite-wifi" rev="2.1.0"/>``.
 
-- Properties to define if ``testsuite.preferipv6`` is ``false``:
+  - WiFi SSID and passphrase are set with respectively with the properties ``wifi.ssid`` and ``wifi.passphrase``.
 
-  - ``wrong.machine.ipv4``: An invalid IPv4 address on the local network
-  - ``remote.machine.ipv4``: IPv4 address of the testsuite server
-  - ``netif.ipv4.name``: network interface name with an IPv4
+Properties to define if ``testsuite.preferipv6`` is ``false``:
 
-- Properties to define if ``testsuite.preferipv6`` is ``true``:
+- ``wrong.machine.ipv4``: An invalid IPv4 address on the local network
+- ``remote.machine.ipv4``: IPv4 address of the testsuite server
+- ``netif.ipv4.name``: network interface name with an IPv4
 
-  - ``wrong.machine.ipv6``: An invalid IPv6 address on the local network
-  - ``remote.machine.ipv6``: IPv6 address of the testsuite server
-  - ``netif.ipv6.name``: network interface name with an IPv6
+Properties to define if ``testsuite.preferipv6`` is ``true``:
 
-- When testing a device with a dual-stack IPv6+IPv4, the following properties must be set:
+- ``wrong.machine.ipv6``: An invalid IPv6 address on the local network
+- ``remote.machine.ipv6``: IPv6 address of the testsuite server
+- ``netif.ipv6.name``: network interface name with an IPv6
 
-  - ``remote.machine.ipv4``: see above
-  - ``netif.ipv4.name``: see above
-  - ``remote.machine.ipv6``: see above
-  - ``netif.ipv6.name``: see above
+When testing a device with a dual-stack IPv6+IPv4, the following properties must be set:
+
+- ``remote.machine.ipv4``: see above
+- ``netif.ipv4.name``: see above
+- ``remote.machine.ipv6``: see above
+- ``netif.ipv6.name``: see above
 
 OpenJDK Tests
 -------------

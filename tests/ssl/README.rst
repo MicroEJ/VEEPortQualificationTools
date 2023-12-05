@@ -46,9 +46,9 @@ and prefixed by ``microej.java.property.``.
 
 - Application options specific to SSL:
 
-   - ``remote.machine.ip``: Set this property with the value of the IP address of the machine that runs the tests.
-   - ``remoteapp.timeout``: Amount of time (in milliseconds) that the remote test will wait before interrupting its execution.
-   - ``microej.ssl.testsuite.ssl.stack``: Property to set to ``mbedtls`` when running tests on platforms with a mbedTLS backend.
+  - ``remote.machine.ip``: Set this property with the value of the IP address of the machine that runs the tests.
+  - ``remoteapp.timeout``: Amount of time (in milliseconds) that the remote test will wait before interrupting its execution.
+  - ``microej.ssl.testsuite.ssl.stack``: Property to set to ``mbedtls`` when running tests on platforms with a mbedTLS backend.
 
 Test Suite Source Code Navigation
 ---------------------------------

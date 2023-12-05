@@ -7,7 +7,7 @@
 -->
 <ivy-module version="2.0" xmlns:ea="http://www.easyant.org" xmlns:m="http://ant.apache.org/ivy/maven" xmlns:ej="https://developer.microej.com" ej:version="2.0.0">
 
-	<info organisation="com.microej.testsuite" module="vg-testsuite-report" status="integration" revision="1.0.0">
+	<info organisation="com.microej.testsuite" module="vg-testsuite-report" status="integration" revision="1.1.0">
         <ea:build organisation="com.is2t.easyant.buildtypes" module="build-microej-testsuite" revision="[2.2.0-RC0,3.0.0-RC0["/>
         <ea:plugin org="com.is2t.easyant.plugins" module="ivy-update" revision="1.+" />
 	</info>
@@ -23,14 +23,14 @@
     </publications>
     
     <dependencies>
-		<dependency org="ej.api" name="microui" rev="3.2.0"/>
-		<dependency org="ej.api" name="microvg" rev="1.3.0"/>
+		<dependency org="ej.api" name="microui" rev="3.4.0"/>
+		<dependency org="ej.api" name="microvg" rev="1.4.0"/>
 		
     	<!--
     		The testsuite module dependency (i.e. module that contains tests).
     		The last module version is automatically fetched by default.
     		To freeze the module version, add the following attribute: ej:match="perfect"
     	-->
-		<dependency org="com.microej.pack.vg" name="vg-testsuite" rev="2.2.0" conf="test->default" />
+		<dependency org="com.microej.pack.vg" name="vg-testsuite" rev="2.5.0" conf="test->default" />
     </dependencies>
 </ivy-module>

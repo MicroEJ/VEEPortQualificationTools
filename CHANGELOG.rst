@@ -10,6 +10,28 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <https://keepachangelog.com/en/1.0.0/>`_, and this project adheres to `Semantic Versioning <https://semver.org/spec/v2.0.0.html>`_.
 
+-------------------
+2.10.0 - 2023-12-05
+-------------------
+
+Added 
+=====
+
+- MicroEJ GNSS Validation (Java) 1.0.0 (see `CHANGELOG <tests/gnss/java-testsuite-runner-gnss/CHANGELOG.rst>`_).
+- MicroEJ FS Validation (Java) 1.1.0 (see `CHANGELOG <tests/fs/java-testsuite-runner-fs/CHANGELOG.rst>`_).
+- MicroEJ EVENT QUEUE Validation (Java) 1.0.0 (see `CHANGELOG <tests/event-queue/java-testsuite-runner-event-queue/CHANGELOG.rst>`_).
+- MicroEJ Multi-Sandbox C Validation (C) 1.0.0 (see `CHANGELOG <tests/llkernel/CHANGELOG.rst>`_).
+- MicroEJ External Resource Loader Validation (Java) 1.0.0 (see `CHANGELOG <tests/ext-res-loader/java-testsuite-runner-ext-res-loader/CHANGELOG.rst>`_).
+
+Changed
+=======
+
+- MicroEJ UI Validation (Java) 1.4.0 (see `CHANGELOG <tests/ui/ui3/java-testsuite-runner-ui3/CHANGELOG.rst>`_).
+- MicroEJ VG Validation (Java) 2.5.0 (see `CHANGELOG <tests/ui/ui3/java-testsuite-runner-vg/CHANGELOG.rst>`_).
+- MicroEJ SSL Validation (Java) 1.0.2 (see `CHANGELOG <tests/ssl/java-testsuite-runner-ssl/CHANGELOG.rst>`_).
+- MicroEJ NET Validation (Java) 1.0.2 (see `CHANGELOG <tests/net/java-testsuite-runner-net/CHANGELOG.rst>`_).
+- Platform Configuration Additions 2.1.0 (see `CHANGELOG <framework/platform/content-sdk-5/build/CHANGELOG.md>`_).
+
 ------------------
 2.9.0 - 2023-06-29
 ------------------
@@ -24,7 +46,7 @@ Added
 =====
 
 - MicroEJ External Resource Loader Validation (Java) 1.0.0 (see `CHANGELOG <tests/ext-res-loader/java-testsuite-runner-ext-res-loader/CHANGELOG.rst>`_).
-- MicroEJ MicroVG Validation (Java) 1.0.0 (see `CHANGELOG <tests/microvg/java-testsuite-runner-microvg/CHANGELOG.rst>`_).
+- MicroEJ Validation (Java) 1.0.0 (see `CHANGELOG <tests/vg/java-testsuite-runner-vg/CHANGELOG.rst>`_).
 
 Changed
 =======
@@ -76,7 +98,7 @@ Remove
 Changed
 =======
 
-- Platform Configuration Additions 1.4.0 (see `CHANGELOG <framework/platform/content/build/CHANGELOG.md>`_).
+- Platform Configuration Additions 1.4.0 (see `CHANGELOG <framework/platform/content-sdk-5/build/CHANGELOG.md>`_).
 
 Fixed
 =====
@@ -104,7 +126,7 @@ Changed
 Changed
 =======
 
-- Platform Configuration Additions 1.3.0 (see `CHANGELOG <framework/platform/content/build/CHANGELOG.md>`_).
+- Platform Configuration Additions 1.3.0 (see `CHANGELOG <framework/platform/content-sdk-5/build/CHANGELOG.md>`_).
 - IAREW run script compliance with latest specification (the executable file can be provided as first argument).
 - CDT_GCC run script compliance with latest specification (the executable file can be provided as first argument).
 
@@ -125,7 +147,7 @@ Added
 Changed
 =======
 
-- Platform Configuration Additions 1.2.0 (see `CHANGELOG <framework/platform/content/build/CHANGELOG.md>`_).
+- Platform Configuration Additions 1.2.0 (see `CHANGELOG <framework/platform/content-sdk-5/build/CHANGELOG.md>`_).
 - ``cd`` into the script's directory in CDT scripts because CDT needs to be called from the directory in which the project is.
 - Use CDT variable ``CUBE_PROGRAMMER_DIR`` absolute path instead of relative so the user can choose another Cube Programmer installation than the one installed in CDT.
 - Replace CDT ``cleanBuild`` by ``build`` as the clean is not needed and it forces to rebuild the whole project.
@@ -137,7 +159,7 @@ Fixed
 - IAREW run script compliance (copy of the local ``application.out``).
 - Keil uVision run script compliance (copy of the local ``application.out``).
 - Documentation of ``target.platform.dir`` to setup the Test Suite FS.
-- CORE Test Suite updated to 3.0.2 (see `CHANGELOG <tests/core/java-testsuite-runner-core/CHANGELOG.rst`_).
+- CORE Test Suite updated to 3.0.2 (see `CHANGELOG <tests/core/java-testsuite-runner-core/CHANGELOG.rst>`_).
 
 ------------------
 2.3.0 - 2021-01-13

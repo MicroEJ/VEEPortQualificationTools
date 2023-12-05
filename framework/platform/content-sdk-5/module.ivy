@@ -1,17 +1,16 @@
 <!--
-	Copyright 2020-2022 MicroEJ Corp. All rights reserved.
+	Copyright 2020-2023 MicroEJ Corp. All rights reserved.
 	Use of this source code is governed by a BSD-style license that can be found with this software.
 -->
 <ivy-module version="2.0" xmlns:ea="http://www.easyant.org" xmlns:m="http://ant.apache.org/ivy/extra" xmlns:ej="https://developer.microej.com" ej:version="2.0.0">
-    <info organisation="com.mycompany" module="Platform" status="integration" revision="0.1.0">
-        <ea:build organisation="com.is2t.easyant.buildtypes" module="build-custom" revision="1.+"/>
+    <info organisation="com.mycompany" module="VEEPort" status="integration" revision="0.1.0">
+        <ea:build organisation="com.is2t.easyant.buildtypes" module="build-custom" revision="2.2.+"/>
     	<ea:plugin org="com.is2t.easyant.plugins" module="eclipse-antRunner" revision="1.+"/>
     	<ea:plugin org="com.is2t.easyant.plugins" module="mam" revision="1.+"/>
 
-    	<ea:plugin org="com.is2t.easyant.plugins" module="artifact-checker" revision="1.7.+"/>
-    	<ea:plugin org="com.is2t.easyant.plugins" module="changelog" revision="2.0.+"/>
-    	<ea:plugin org="com.is2t.easyant.plugins" module="license" revision="2.0.+"/>
-    	<ea:plugin org="com.is2t.easyant.plugins" module="readme" revision="2.2.+"/>
+    	<ea:plugin org="com.is2t.easyant.plugins" module="changelog" revision="3.0.+"/>
+    	<ea:plugin org="com.is2t.easyant.plugins" module="license" revision="3.0.+"/>
+    	<ea:plugin org="com.is2t.easyant.plugins" module="readme" revision="3.0.+"/>
 
         <!-- Retrieve embedded and default dependencies -->
     	<ea:property name="dependencies.retrieve.conf" value="embedded,default" />
@@ -23,11 +22,11 @@
 
     <configurations defaultconfmapping="embedded->default">
 		<conf name="default" visibility="public" description="Runtime dependencies to other artifacts"/>
-		<conf name="provided" visibility="public" description="Compile-time dependencies to APIs provided by the platform"/>
+		<conf name="provided" visibility="public" description="Compile-time dependencies to APIs provided by the VEE Port"/>
 		<conf name="documentation" visibility="public" description="Documentation related to the artifact (javadoc, PDF)"/>
 		<conf name="dist" visibility="public" description="Contains extra files like README.md, licenses"/>
 		<conf name="source" visibility="public" description="Source code"/>
-		<conf name="embedded" visibility="private" description="platform dependencies.  Use only for MicroEJ Architecture and MicroEJ Packs required to build the platform."/>
+		<conf name="embedded" visibility="private" description="VEE Port dependencies. Use only for MicroEJ Architecture and MicroEJ Packs required to build the VEE Port."/>
     </configurations>
     
     <publications>

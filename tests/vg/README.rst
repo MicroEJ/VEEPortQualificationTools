@@ -17,30 +17,53 @@ Specifications
 - Test Suite Module: `com.microej.pack.vg#vg-testsuite <https://repository.microej.com/modules/com/microej/pack/vg/>`__
 
 Set the VG Test Suite module version in the `module.ivy
-<java-testsuite-runner-vg/module.ivy>`__ to match the pack version of the platform
+<java-testsuite-runner-vg/module.ivy>`__ to match the pack version of the VEE Port
 tested.
 
-Please refer to `Platform Qualification Test Suite Versioning
+Please refer to `VEE Port Qualification Test Suite Versioning
 <https://docs.microej.com/en/latest/PlatformDeveloperGuide/platformQualification.html#test-suite-versioning>`__
 to determine the MicroVG Test Suite module version.
 
 Requirements
 -------------
 
-- See Platform Test Suites `documentation <../README.rst>`__.
+See VEE Port Test Suites `documentation <../README.rst>`__.
+
+Relationship
+------------
+
+The test suite evolves as the VG Pack evolves: bug fixes, new features, etc. 
+A test suite is, therefore, compatible with a given range of VG Packs (cf VG Pack changelog: https://docs.microej.com/en/latest/VEEPortingGuide/vgChangeLog.html). 
+The following table shows the relationship between the different versions of the test suite and the associated VG Packs. 
+(note: Each VG Pack implements a version of MicroVG; cf VG Pack release notes: https://docs.microej.com/en/latest/VEEPortingGuide/vgReleaseNotes.html). 
+
+The table indicates:
+
+* the version of the project ``java-testsuite-runner-vg``,
+* the version of the test suite library fetched by the project ``java-testsuite-runner-vg``,
+* the compatible VG Packs to run the tests of the test suite,
+* the minimum version of the MicroVG API required by the test suite. 
+
++-----------------+-------------------+---------------+-------------------+
+| Project version | TestSuite version | VG Pack Range | MicroVG API Range |
++=================+===================+===============+===================+
+| 1.1.0           | 2.5.0             | [1.4.2-2.0.0[ | [1.4.0-2.0.0[     |
++-----------------+-------------------+---------------+-------------------+
+| 1.0.0           | 2.2.0             | [1.3.0-2.0.0[ | [1.3.0-2.0.0[     |
++-----------------+-------------------+---------------+-------------------+
 
 Usage
 -----
 
 - In MicroEJ SDK, import the ``java-testsuite-runner-vg`` project in your workspace.
-- Follow the configuration and execution steps described in Platform Test Suites `documentation <../README.rst>`__.
+- Follow the configuration and execution steps described in VEE Port Test Suites `documentation <../README.rst>`__.
 
 Test Suite Source Code Navigation
 ---------------------------------
 
-- See Platform Test Suites `documentation <../README.rst>`__.
+See VEE Port Test Suites `documentation <../README.rst>`__.
 
 Troubleshooting
 ---------------
 
-See Platform Test Suites `documentation <../README.rst>`__.
+See VEE Port Test Suites `documentation <../README.rst>`__.

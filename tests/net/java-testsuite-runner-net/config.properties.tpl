@@ -111,5 +111,5 @@ microej.testsuite.cc.jars.name.regex=test-.*jar
 
 # The logging redirection address and port for the remote side of tests.
 # When port is set to 0, the logs are not redirected.
-remoteapp.logging.host=localhost
-remoteapp.logging.port=0
+microej.testsuite.properties.remoteapp.logging.host=localhost
+microej.testsuite.properties.remoteapp.logging.port=0
