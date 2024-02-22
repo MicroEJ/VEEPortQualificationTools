@@ -11,6 +11,21 @@ Relationship
 
 See `UI Readme <README.rst>`_ to have more information about the relationship between the version of the test suite and the UI Pack.
 
+.. _170---2024-02-14:
+
+[1.7.0] - 2023-02-14
+--------------------
+
+Changed
+~~~~~~~
+
+- UI Test Suite 1.7.0 (compatibility with UI Pack 14.0.0).
+
+Removed
+~~~~~~~
+
+- Remove ``testBackBufferRestore``: no meaning since UI Pack 14.0.0.
+
 .. _140---2023-12-05:
 
 [1.4.0] - 2023-12-05
@@ -65,5 +80,5 @@ Added
 -  Drawing time: retrieve the maximum drawing time to have the better framerate.
 
 ..
-    Copyright 2021-2023 MicroEJ Corp. All rights reserved.
+    Copyright 2021-2024 MicroEJ Corp. All rights reserved.
     Use of this source code is governed by a BSD-style license that can be found with this software.

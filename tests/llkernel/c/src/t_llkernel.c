@@ -235,6 +235,12 @@ static void T_LLKERNEL_CHECK_resource_install_overflow(void)
     	TEST_ASSERT_EQUAL_INT(LLKERNEL_ERROR, result);
     }
 
+    result = LLKERNEL_IMPL_copyToROM__LiceTea_lang_Ram_2LiceTea_lang_Ram_2I(featureRomAddr + (FEATURE_DATA_BUFFER_SIZE / 2), featureDataBuffer, (FEATURE_DATA_BUFFER_SIZE - 1));
+    if(LLKERNEL_ERROR != result){
+    	// Failure expected here but call to LLKERNEL_IMPL_copyToROM() function succeed. Try to call LLKERNEL_IMPL_flushCopyToROM() => fail expected.
+    	result = LLKERNEL_IMPL_flushCopyToROM();
+    	TEST_ASSERT_EQUAL_INT(LLKERNEL_ERROR, result);
+    }
 }
 
 /** @brief Attempt to install a feature out of the defined ROM area:

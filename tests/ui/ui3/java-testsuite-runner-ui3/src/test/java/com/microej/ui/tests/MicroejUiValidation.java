@@ -1,12 +1,11 @@
 /*
  * Java
  *
- * Copyright 2021-2022 MicroEJ Corp. All rights reserved.
+ * Copyright 2021-2024 MicroEJ Corp. All rights reserved.
  * Use of this source code is governed by a BSD-style license that can be found with this software.
  */
 package com.microej.ui.tests;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.AfterClass;
@@ -26,7 +25,7 @@ import ej.microui.display.Painter;
  */
 public class MicroejUiValidation {
 
-	private static final String VERSION = "1.1.0";
+	private static final String VERSION = "1.7.0";
 
 	/**
 	 * Properties suffix: add "-Dcom.microej.ui.tests.xxx=xxx" in your JRE tab
@@ -38,15 +37,6 @@ public class MicroejUiValidation {
 	 */
 	private static final String OPTION_CLOCK_NB_SECONDS = "clock.seconds";
 	private static final int DEFAULT_TIME_TEST_SECONDS = 10;
-
-	/**
-	 * Property to define a test area smaller than the size of the display. Relevant if it is a round display or if the
-	 * pixels at the corners have been given special treatment. The default value is 0.
-	 *
-	 * @see testBackBufferRestore
-	 */
-	private static final String OPTION_TEST_AREA_OFFSET = "area.offset";
-	private static final int DEFAULT_TEST_AREA_OFFSET = 0;
 
 	/**
 	 * Property to fix the flush time tolerance. This value must be lower than hardware flush time.
@@ -61,7 +51,7 @@ public class MicroejUiValidation {
 				+ "                                  *");
 		System.out.println(sep);
 		System.out.println(
-				"* Copyright 2021-2022 MicroEJ Corp. All rights reserved.                                            *");
+				"* Copyright 2021-2024 MicroEJ Corp. All rights reserved.                                            *");
 		System.out.println(
 				"* Use of this source code is governed by a BSD-style license that can be found with this software.  *");
 		System.out.println(sep);
@@ -285,101 +275,6 @@ public class MicroejUiValidation {
 		printFramerateReport(framerateHz, 1, framerateTimeUs, flushTimeUs);
 		printFramerateReport(framerateHz, 2, framerateTimeUs, flushTimeUs);
 		printFramerateReport(framerateHz, 3, framerateTimeUs, flushTimeUs);
-	}
-
-	/**
-	 * Tests the <code>LLUI_DISPLAY_IMPL_flush</code> implementation: the post-flush copy.
-	 * <p>
-	 * This test is only useful when the implementation of <code>LLUI_DISPLAY_IMPL_flush</code> uses the "Switch" mode
-	 * (and not "Copy" or "Direct" modes, see Platform Development Guide). In that case, the post-flush copy restores
-	 * the "past": the previous application drawings made before the flush.
-	 * <p>
-	 * After the flush step, the <code>LLUI_DISPLAY_IMPL_flush</code> implementation has to restore the content of
-	 * returned backbuffer with the content of flushed back buffer (MicroUI specification). This prevent to the MicroUI
-	 * application to draw again the old content.
-	 */
-	@Test
-	public void testBackBufferRestore() {
-
-		Display display = Display.getDisplay();
-		GraphicsContext g = display.getGraphicsContext();
-		int displayWidth = display.getWidth();
-		int displayHeight = display.getHeight();
-
-		int areaOffset = getOptionAsInt(OPTION_TEST_AREA_OFFSET, DEFAULT_TEST_AREA_OFFSET, " pixel(s)");
-
-		// draw in all back buffer and flush it
-		g.setColor(Colors.WHITE);
-		Painter.fillRectangle(g, 0, 0, displayWidth, displayHeight);
-		display.flush();
-
-		// draw in all back buffer and flush it
-		g.setColor(Colors.BLACK);
-		Painter.fillRectangle(g, 0, 0, displayWidth, displayHeight);
-		display.flush();
-
-		// here: the copy after a flush has to restore the content of
-		// flushed backbuffer: a black rectangle. If the color is not black,
-		// it means the post copy has not been performed or not fully done.
-
-		checkAreaCorners(g, "[A] testBackBufferRestore at ", areaOffset, areaOffset, displayWidth - areaOffset - 1,
-				displayHeight - areaOffset - 1, Colors.BLACK);
-
-		// draw in all back buffer and flush it
-		g.setColor(Colors.WHITE);
-		Painter.fillRectangle(g, 0, 0, displayWidth, displayHeight);
-		display.flush();
-
-		// draw in the middle of back buffer and flush it
-		int offset = 10;
-		g.setColor(Colors.BLACK);
-		g.setClip(offset + areaOffset, offset + areaOffset, displayWidth - 2 * (offset + areaOffset),
-				displayHeight - 2 * (offset + areaOffset));
-		Painter.fillRectangle(g, 0, 0, displayWidth, displayHeight);
-		display.flush();
-
-		// here: the copy after a flush has to restore the content of
-		// flushed backbuffer: a black rectangle in the middle of white background.
-
-		checkAreaCorners(g, "[B] testBackBufferRestore at ", areaOffset, areaOffset, displayWidth - areaOffset - 1,
-				displayHeight - areaOffset - 1, Colors.WHITE);
-
-		checkAreaCorners(g, "[C] testBackBufferRestore at ", areaOffset + offset, areaOffset + offset,
-				displayWidth - areaOffset - offset - 1, displayHeight - areaOffset - offset - 1, Colors.BLACK);
-
-	}
-
-	/**
-	 * Compares the color of pixels at each corner of a rectangle with coordinates given in parameters.
-	 */
-	private void checkAreaCorners(GraphicsContext g, String msgTest, int recStartX, int recStartY, int recEndX,
-			int recEndY, int expectedColor) {
-
-		Display display = Display.getDisplay();
-		int displayColor = display.getDisplayColor(expectedColor);
-
-		boolean successful = false;
-		try {
-			String assertMessage = msgTest + String.valueOf(recStartX) + "," + String.valueOf(recStartY);
-			assertEquals(assertMessage, displayColor, g.readPixel(recStartX, recStartY) & 0xffffff);
-
-			assertMessage = msgTest + String.valueOf(recEndX) + "," + String.valueOf(recStartY);
-			assertEquals(assertMessage, displayColor, g.readPixel(recEndX, recStartY) & 0xffffff);
-
-			assertMessage = msgTest + String.valueOf(recStartX) + "," + String.valueOf(recEndY);
-			assertEquals(assertMessage, displayColor, g.readPixel(recStartX, recEndY) & 0xffffff);
-
-			assertMessage = msgTest + String.valueOf(recEndX) + "," + String.valueOf(recEndY);
-			assertEquals(assertMessage, displayColor, g.readPixel(recEndX, recEndY) & 0xffffff);
-			successful = true;
-		} finally {
-			if (!successful) {
-				System.out.println(
-						"If an exception occurs here, it is because you may have a round display or irrelevant corners on your display. \nPlease, configure the property \""
-								+ PROPERTY_SUFFIX + OPTION_TEST_AREA_OFFSET + "\".");
-			}
-		}
-
 	}
 
 	/**

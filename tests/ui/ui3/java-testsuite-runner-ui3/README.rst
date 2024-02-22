@@ -1,5 +1,5 @@
 ..
-    Copyright 2021-2023 MicroEJ Corp. All rights reserved.
+    Copyright 2021-2024 MicroEJ Corp. All rights reserved.
     Use of this source code is governed by a BSD-style license that can be found with this software.
 
 MicroEJ UI Validation
@@ -22,7 +22,7 @@ Requirements
 ------------
 
 -  MicroEJ SDK version ``5.1.0`` (included in MicroEJ SDK dist. ``19.05``).
--  VEE Port built from a MicroEJ UI Pack version ``13.0.0`` or higher.
+-  VEE Port built from a MicroEJ UI Pack version ``14.0.0`` or higher.
 -  See VEE Port Test Suites `documentation <../../../README.rst>`_.
 
 Relationship
@@ -43,6 +43,8 @@ The table indicates:
 +-----------------+-------------------+-----------------+-------------------+------------------------------------------------------------------------+
 | Project version | TestSuite version | UI Pack Range   | MicroUI API Range | Testsuite changes                                                      |
 +=================+===================+=================+===================+========================================================================+
+| 1.7.0           | 1.7.0             | [14.0.0-15.0.0[ | [3.5.0-4.0.0[     | Add Buffer Refresh Strategies tests 									 |
++-----------------+-------------------+-----------------+-------------------+------------------------------------------------------------------------+
 | 1.4.0           | 1.4.0             | [13.7.0-14.0.0[ | [3.0.3-4.0.0[     | Add image formats with premultiplied alpha values                      |
 +-----------------+-------------------+-----------------+-------------------+------------------------------------------------------------------------+
 | [1.3.0-1.3.1]   | 1.3.0             | [13.4.1-14.0.0[ | [3.0.3-4.0.0[     | Allow setting the image heap size according to the display buffer size |
@@ -78,9 +80,9 @@ In MicroEJ SDK,
 ::
 
     *****************************************************************************************************
-    *                                  MicroEJ UI Validation - 1.0.0                                  *
+    *                                  MicroEJ UI Validation - 1.7.0                                    *
     *****************************************************************************************************
-    * Copyright 2021-2022 MicroEJ Corp. All rights reserved.                                            *
+    * Copyright 2021-2024 MicroEJ Corp. All rights reserved.                                            *
     * Use of this source code is governed by a BSD-style license that can be found with this software.  *
     *****************************************************************************************************
     
@@ -136,19 +138,6 @@ This test is useful when the implementation of ``LLUI_DISPLAY_IMPL_flush`` uses 
 framerate. The possible framerates depend on the LCD and on the post-flush copy step. When the
 drawing time exceeds the maximum drawing time, the framerate is divided by two when the flush
 job is synchronized on LCD tearing signal.
-
-Back Buffer Restore
-~~~~~~~~~~~~~~~~~~~
-
-This test is useful when the implementation of ``LLUI_DISPLAY_IMPL_flush`` uses the  `SWITCH mode <https://docs.microej.com/en/latest/PlatformDeveloperGuide/uiDisplay.html#switch>`_.
-In that case, after each call to ``LLUI_DISPLAY_IMPL_flush``, the implementation has to copy the content of the new frame buffer in the new back buffer before calling ``LLUI_DISPLAY_flushDone`` (post-flush-copy).
-The MicroUI Graphics Engine automatically waits this signal before performing the next application drawing.
-This copy is often performed by a hardware DMA.
-
-If the copy is not performed or if the MicroUI Graphics Engine is notified too early (before or during the copy), this test fails: the new back buffer content does not contain the previous drawing.
-
-This test may fail because the display is round or has irrelevant pixels in the corners. In this case, please set the ``area.offset`` property to avoid unwanted areas of the frame buffer.
-This property can be set in a file `System.properties.list` with the prefix ``com.microej.ui.tests.``. For example ``com.microej.ui.tests.area.offset=30``.
 
 Flush Time
 ~~~~~~~~~~

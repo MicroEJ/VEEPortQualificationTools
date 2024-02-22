@@ -11,7 +11,7 @@
 #include "../../../../framework/c/embunit/embUnit/embUnit.h"
 #include "../../../../framework/c/utils/inc/u_print.h"
 
-#define LLKERNEL_VERSION "v1.0.0"
+#define LLKERNEL_VERSION "v1.1.0"
 
 void T_LLKERNEL_main(void) {
     UTIL_print_string("\nT_LLKERNEL " LLKERNEL_VERSION "\n");

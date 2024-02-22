@@ -10,17 +10,17 @@
    :alt: arch_8.0 badge
    :align: left
 ..
-   Copyright 2019-2023 MicroEJ Corp. All rights reserved.
+   Copyright 2019-2024 MicroEJ Corp. All rights reserved.
    Use of this source code is governed by a BSD-style license that can be found with this software.
 
 
 Description
 ===========
 
-The Platform Qualification Tools (PQT) project provides the tools required to validate each component of a MicroEJ Platform.
-After porting or adding a feature to a MicroEJ Platform, it is necessary to validate its integration.
+The VEE Port Qualification Tools (PQT) project provides the tools required to validate each component of a VEE Port (formerly named _Platform_).
+After porting or adding a feature to a VEE Port, it is necessary to validate its integration.
 
-Clone this repository with ``git clone --recursive https://github.com/MicroEJ/PlatformQualificationTools``.
+Clone this repository with ``git clone --recursive https://github.com/MicroEJ/VEEPortQualificationTools``.
 
 Test Suites Available
 =====================
@@ -38,7 +38,7 @@ See `CORE Readme <tests/core/README.rst>`_
 Multi-Sandbox Test Suite
 ------------------------
 
-The Multi-Sandbox Test Suite contains a C Test Suite. It ensures MicroEJ Multi-Sandbox features install/uninstall flow will run correctly.
+The Multi-Sandbox Test Suite contains a C Test Suite. It ensures Multi-Sandbox Features install/uninstall flow will run correctly.
 
 See `Multi-Sandbox Readme <tests/llkernel/README.rst>`_
 
@@ -113,17 +113,17 @@ The External Resource Loader Test Suite is a Java Test Suite.
 
 See `External Resource Loader Readme <tests/ext-res-loader/README.rst>`_
 
-Platform Qualification Tools Overview
+VEE Port Qualification Tools Overview
 =====================================
 
-The Platform Qualification Tools (PQT) contains:
+The VEE Port Qualification Tools (PQT) contains:
 
 - a ``framework/`` folder with scripts and frameworks used by the tests
 - a ``tests/`` folder with one sub-folder per Test Suite (e.g. ``tests/core/`` for the CORE Test Suite, etc.)
 
 Each Test Suite sub-folder contains a ``README.rst`` that explain how to use the Test Suite in details.
 
-The following sections give an overview of the Platform Qualification Tools (PQT).
+The following sections give an overview of the VEE Port Qualification Tools (PQT).
 
 Framework
 ---------
@@ -142,7 +142,7 @@ The ``framework/c/`` folders contains the following:
 Platform Configuration Additions
 --------------------------------
 
-The ``framework/platform/content`` folder contains the MicroEJ Platform Configuration Additions.
+The ``framework/platform/content`` folder contains the Platform Configuration Additions.
 See the `Platform Configuration Additions README <framework/platform/README.rst>`_ for more information.
 For licenses management, please refer to `License <https://docs.microej.com/en/latest/overview/licenses.html>`_ .
 
@@ -156,14 +156,14 @@ See the `Build and Run Scripts Examples <framework/platform/scripts/README.rst>`
 Test Suites
 -----------
 
-The Platform Qualification Tools (PQT) provides two kinds of Test Suite:
+The VEE Port Qualification Tools (PQT) provides two kinds of Test Suite:
 
 - C Test Suite that must be added to the BSP
 - Java Test Suite that are launched as standard MicroEJ Application
 
-A Test Suite validates a particular component of a MicroEJ Platform.
-The CORE Test Suite is applicable to every MicroEJ Platform.
-The other Test Suites depends on the capabilities provided by the MicroEJ Platform to validate.
+A Test Suite validates a particular component of a VEE Port.
+The CORE Test Suite is applicable to every VEE Port.
+The other Test Suites depends on the capabilities provided by the VEE Port to validate.
 
 A detailed explanation how to use each Test Suite is provided in the ``README.rst`` present in each sub-folder.
 For example, for the CORE Test Suite, refer to the `CORE Readme <tests/core/README.rst>`_.
@@ -189,6 +189,6 @@ Java Test Suites
 
 The Java Test Suites validate the Foundation Libraries integration.
 
-The Java Test Suites verify the integration of the MicroEJ Platform over the
+The Java Test Suites verify the integration of the VEE Port over the
 BSP. No specific unit test framework is used, each test describes how it
 works.
