@@ -1,5 +1,5 @@
 ..
-    Copyright 2023 MicroEJ Corp. All rights reserved.
+    Copyright 2023-2024 MicroEJ Corp. All rights reserved.
     Use of this source code is governed by a BSD-style license that can be found with this software.
 ..
 
@@ -19,8 +19,8 @@ Specifications
 Set the Event Queue Test Suite module version in the `module.ivy
 <java-testsuite-runner-event-queue/module.ivy>`_.
 
-Please refer to `Platform Qualification Test Suite Versioning
-<https://docs.microej.com/en/latest/PlatformDeveloperGuide/platformQualification.html#test-suite-versioning>`_
+Please refer to `VEE Port Qualification Test Suite Versioning
+<https://docs.microej.com/en/latest/VEEPortingGuide/veePortQualification.html#test-suite-versioning>`_
 to determine the Event Queue Test Suite module version.
 
 Requirements
@@ -34,7 +34,7 @@ Usage
 
 - In your BSP project, add all files of ``c/src`` folder as source files:
 - In your BSP project, add ``c/inc`` folder as include paths.
-- In MicroEJ SDK, import the ``java-testsuite-runner-event-queue`` project in your workspace.
+- In the SDK, import the ``java-testsuite-runner-event-queue`` project in your workspace.
 - Follow the configuration and execution steps described in VEE Port Test Suites `documentation <../README.rst>`_.
 
 Test Suite Source Code Navigation
@@ -45,5 +45,5 @@ Test Suite Source Code Navigation
 Troubleshooting
 ===============
 
-- This testsuite does not work automatically in Simulation. You have to manually stop the MicroEJ application by closing the Front panel.
+- This testsuite does not work automatically in Simulation. You have to manually stop the Application by closing the Front panel.
 - See Vee Port Test Suites `documentation <../README.rst>`_.

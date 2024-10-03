@@ -6,6 +6,20 @@ Changelog <https://keepachangelog.com/en/1.0.0/>`__, and this project
 adheres to `Semantic
 Versioning <https://semver.org/spec/v2.0.0.html>`__.
 
+.. _330--2024-10-03:
+
+[3.3.0] - 2024-10-03
+--------------------
+
+Changed
+~~~~~~~
+
+- Add property ``com.microej.core.tests.can.set.system.time`` allowing to skip checks on application time setting in test ``testMonotonicTime``.
+- Switch to Util.platformTimeMillis() in test testTime to avoid shifting issues
+- Update the default pattern that prevents a test from being re-executed on failure.
+  The new string is ``MicroEJ START``, which is the one printed in the latest VEE Ports (formerly ``VM start``).
+  See ``microej.testsuite.retry.unless`` option in ``config.properties.tpl`` files.
+
 .. _320--2023-06-14:
 
 [3.2.0] - 2023-06-14
@@ -118,5 +132,5 @@ Added
 Features : - Initial revision
 
 ..
-    Copyright 2020-2023 MicroEJ Corp. All rights reserved.
+    Copyright 2020-2024 MicroEJ Corp. All rights reserved.
     Use of this source code is governed by a BSD-style license that can be found with this software.

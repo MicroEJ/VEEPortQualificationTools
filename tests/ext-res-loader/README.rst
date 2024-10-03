@@ -1,5 +1,5 @@
 ..
-    Copyright 2023 MicroEJ Corp. All rights reserved.
+    Copyright 2023-2024 MicroEJ Corp. All rights reserved.
     Use of this source code is governed by a BSD-style license that can be found with this software.
 ..
 
@@ -20,8 +20,8 @@ Set the External resource loader Test Suite module version in the `module.ivy
 <java-testsuite-runner-ext-res-loader/module.ivy>`_ to match the pack version of the VEE Port
 tested.
 
-Please refer to `Platform Qualification Test Suite Versioning
-<https://docs.microej.com/en/latest/PlatformDeveloperGuide/platformQualification.html#test-suite-versioning>`_
+Please refer to `VEE Port Qualification Test Suite Versioning
+<https://docs.microej.com/en/latest/VEEPortingGuide/veePortQualification.html#test-suite-versioning>`_
 to determine the External resource loader Test Suite module version.
 
 Requirements
@@ -33,7 +33,7 @@ Requirements
 Usage
 -----
 
-- In MicroEJ SDK, import the ``java-testsuite-runner-ext-res-loader`` project in your workspace.
+- In the SDK, import the ``java-testsuite-runner-ext-res-loader`` project in your workspace.
 - Follow the configuration and execution steps described in VEE Port Test Suites `documentation <../README.rst>`_.
 
 Test Suite Source Code Navigation

@@ -11,6 +11,22 @@ Relationship
 
 See `UI Readme <README.rst>`_ to have more information about the relationship between the version of the test suite and the UI Pack.
 
+.. _180---2024-10-03:
+
+[1.8.0] - 2024-10-03
+--------------------
+
+Changed
+~~~~~~~
+
+- UI Test Suite 1.8.1 that includes  a bench to check the VEE Port evolution (see `UI Readme <README.rst>`_).
+
+Fixed
+~~~~~
+
+- Fix the comments of MicroejUiValidation to be compatible with UI Pack 14.0.0.
+- Fix the test `testFlushTime()`: when a GPU is used to fill a rectangle, the time measured for the flush included the time to wait the end of fill rectangle.
+
 .. _170---2024-02-14:
 
 [1.7.0] - 2023-02-14

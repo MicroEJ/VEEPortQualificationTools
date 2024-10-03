@@ -1,6 +1,6 @@
 # Properties
 #
-# Copyright 2022-2023 MicroEJ Corp. All rights reserved.
+# Copyright 2022-2024 MicroEJ Corp. All rights reserved.
 # Use of this source code is governed by a BSD-style license that can be found with this software.
 
 ###############################################################################
@@ -11,7 +11,7 @@
 #   Other options are set with a value that shall not be changed by default.
 # 
 # Each option can be declared outside this file as a system property:
-# In MicroEJ SDK, select 'Window' > 'Preferences' > 'Ant' > 'Runtime' > 'Properties'
+# In the SDK, select 'Window' > 'Preferences' > 'Ant' > 'Runtime' > 'Properties'
 # This can be useful to avoid to share absolute file-system locations in this file.
 # In this case, it overrides the option defined in this file if any.
 # Moreover, options related to local setup (absolute file-system locations, trace ip & port)
@@ -23,15 +23,15 @@
 ###############################################################################
 
 ###############################################################################
-# Target Platform [required]
+# Target VEE Port [required]
 ###############################################################################
 
 # target.platform.dir=[absolute_path]
 
 ###############################################################################
 # BSP Connection [required]
-# Uncomment one and only one option block depending on how the target Platform is connected to BSP.  
-# See https://docs.microej.com/en/latest/PlatformDeveloperGuide/platformCreation.html
+# Uncomment one and only one option block depending on how the target VEE Port is connected to BSP.  
+# See https://docs.microej.com/en/latest/VEEPortingGuide/platformCreation.html
 ###############################################################################
 
 # No BSP Connection
@@ -56,7 +56,7 @@
 #microej.testsuite.properties.testsuite.trace.ip=localhost
 #microej.testsuite.properties.testsuite.trace.port=5555
 
-# Platform specific option to redirect trace on dedicated UART
+# VEE Port specific option to redirect trace on dedicated UART
 #microej.testsuite.properties.debug.traces.uart=SET
 
 ###############################################################################
@@ -90,7 +90,7 @@ microej.testsuite.timeout=600
 microej.testsuite.retry.count=1
 
 # Retry a test unless this pattern is shown
-microej.testsuite.retry.unless=VM START
+microej.testsuite.retry.unless=MicroEJ START
 
 # A jvm args to pass to the testsuite harness
 microej.testsuite.jvmArgs=-Xmx768m

@@ -1,5 +1,5 @@
 .. ReStructuredText
-.. Copyright 2023 MicroEJ Corp.  MicroEJ Corp. All rights reserved.
+.. Copyright 2023-2024 MicroEJ Corp.  MicroEJ Corp. All rights reserved.
 .. Use of this source code is governed by a BSD-style license that can be found with this software.
 
 ************************
@@ -39,7 +39,7 @@ Configuration
    * ``framework/c/embunit/embUnit/``
 
 #. Locate the call to ``microej_main`` in the BSP project. Include the ``t_llkernel_main.h`` header file in this file, and add a call to the function ``T_LLKERNEL_main`` just before the call to ``microej_main``.
-#. Build the BSP and link it with the MicroEJ Platform runtime library and MicroEJ Application.
+#. Build the BSP and link it with the Architecture library and the Application.
 
 Expected Results
 ================

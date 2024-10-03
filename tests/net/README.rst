@@ -1,5 +1,5 @@
 ..
-	Copyright 2020-2023 MicroEJ Corp. All rights reserved.
+	Copyright 2020-2024 MicroEJ Corp. All rights reserved.
 	Use of this source code is governed by a BSD-style license that can be found with this software.
 ..
 
@@ -7,7 +7,7 @@
 Network Core Engine Test Suite
 ******************************
 
-This folder contains a ready-to-use project for testing the `Network Core Engine <https://docs.microej.com/en/latest/PlatformDeveloperGuide/networkCoreEngine.html>`_ implementation on a device.
+This folder contains a ready-to-use project for testing the `Network Core Engine <https://docs.microej.com/en/latest/VEEPortingGuide/networkCoreEngine.html>`_ implementation on a device.
 This Test Suite will typically create TCP sockets, UDP sockets, test client side and server side...
 
 
@@ -18,23 +18,22 @@ Specifications
 - Test Suite Module:  `com.microej.pack.net#net-1_1-testsuite <https://repository.microej.com/modules/com/microej/pack/net/net-1_1-testsuite/>`_
 
 Update the NET Test Suite module version in the `module.ivy
-<java-testsuite-runner-net/module.ivy>`_ to match the requirement of the platform
-tested.
+<java-testsuite-runner-net/module.ivy>`_ to match the requirement of the tested VEE Port.
 
-Please refer to `Platform Qualification Test Suite Versioning
-<https://docs.microej.com/en/latest/PlatformDeveloperGuide/platformQualification.html#test-suite-versioning>`_
+Please refer to `VEE Port Qualification Test Suite Versioning
+<https://docs.microej.com/en/latest/VEEPortingGuide/veePortQualification.html#test-suite-versioning>`_
 to determine the Network Core Engine Test Suite module version.
 
 Requirements
 ------------
 
-- See Platform Test Suites `documentation <../README.rst>`_.
+- See VEE Port Test Suites `documentation <../README.rst>`_.
 
 Usage
 -----
 
-- In MicroEJ SDK, import the ``java-testsuite-runner-net`` project in your workspace.
-- Follow the configuration and execution steps described in Platform Test Suites `documentation <../README.rst>`_.
+- In the SDK, import the ``java-testsuite-runner-net`` project in your workspace.
+- Follow the configuration and execution steps described in VEE Port Test Suites `documentation <../README.rst>`_.
 
 Test Suite Properties
 ---------------------
@@ -73,17 +72,17 @@ OpenJDK Tests
 -------------
 
 This Test Suite runs network tests from the OpenJDK project. However some of these tests need the localhost network interface to run.
-If you platform or implementation does not provide this interface you can skip the OpenJDK tests.
+If you VEE Port or implementation does not provide this interface you can skip the OpenJDK tests.
 To do so, add the pattern ``**/openjdk/**/*.class`` to the property ``test.run.excludes.pattern`` in your file ``config.properties``.
 
 Test Suite Source Code Navigation
 ---------------------------------
 
-See Platform Test Suites `documentation <../README.rst>`_.
+See VEE Port Test Suites `documentation <../README.rst>`_.
 
 Source code of Test Suite server application is available online: 
 
-1. Download the desired Test Suite Module: For example `com.microej.pack.net#net-1_1-testsuite <https://repository.microej.com/modules/com/microej/pack/net/net-1_1-testsuite/>`_ (refer to `Platform Qualification Test Suite Versioning <https://docs.microej.com/en/latest/PlatformDeveloperGuide/platformQualification.html#test-suite-versioning>`_ to determine the Test Suite module version).
+1. Download the desired Test Suite Module: For example `com.microej.pack.net#net-1_1-testsuite <https://repository.microej.com/modules/com/microej/pack/net/net-1_1-testsuite/>`_ (refer to `VEE Port Qualification Test Suite Versioning <https://docs.microej.com/en/latest/VEEPortingGuide/veePortQualification.html#test-suite-versioning>`_ to determine the Test Suite module version).
 2. Unzip the Test Suite ``RIP`` (it is a zip file): For example ``net-1_1-testsuite-[version].rip``.
 3. Open the Java archive ``JAR`` (it is a zip file): For example ``/content/resources/net-tests/net-1_1-testsuite-remote.jar/``.
 4. Open the desired test: For example ``/com/microej/net/test/integration/remoteapp/TestServerSocketAccept.java``.
@@ -91,7 +90,7 @@ Source code of Test Suite server application is available online:
 Troubleshooting
 ---------------
 
-See Platform Test Suites `documentation <../README.rst>`_.
+See VEE Port Test Suites `documentation <../README.rst>`_.
 
 Debug Test Suite Server Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

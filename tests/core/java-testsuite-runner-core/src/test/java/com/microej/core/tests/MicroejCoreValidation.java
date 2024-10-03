@@ -1,7 +1,7 @@
 /*
  * Java
  *
- * Copyright 2013-2023 MicroEJ Corp. All rights reserved.
+ * Copyright 2013-2024 MicroEJ Corp. All rights reserved.
  * Use of this source code is governed by a BSD-style license that can be found with this software.
  */
 package com.microej.core.tests;
@@ -35,7 +35,7 @@ import ej.bon.Util;
  */
 public class MicroejCoreValidation {
 
-	private static final String VERSION = "3.2.0";
+	private static final String VERSION = "3.3.0";
 
 	private static final String PROPERTY_SUFFIX = "com.microej.core.tests.";
 	private static final String OPTION_CLOCK_NB_SECONDS = "clock.seconds";
@@ -46,6 +46,11 @@ public class MicroejCoreValidation {
 	 */
 	private static final String OPTION_MAX_ALLOWED_CLOCK_TICK_DURATION_MS = "max.allowed.clock.tick.duration.milliseconds";
 	private static final int DEFAULT_MAX_ALLOWED_CLOCK_TICK_DURATION_MS = 20;
+	/**
+	 * Option that specifies whether the system time can be set on the platform being qualified.
+	 */
+	private static final String OPTION_CAN_SET_SYSTEM_TIME = "can.set.system.time";
+	private static final boolean DEFAULT_CAN_SET_SYSTEM_TIME = true;
 
 	private static final String INVALID_C_FUNCTION_MESSAGE = "C function not correctly implemented (check your libc configuration)";
 	private static final String INCOHERENT_FPU_MESSAGE = "FPU option is not coherent between MicroEJ Core and BSP";
@@ -92,7 +97,7 @@ public class MicroejCoreValidation {
 				+ "                                  *");
 		System.out.println(sep);
 		System.out.println(
-				"* Copyright 2013-2023 MicroEJ Corp. All rights reserved.                                            *");
+				"* Copyright 2013-2024 MicroEJ Corp. All rights reserved.                                            *");
 		System.out.println(
 				"* Use of this source code is governed by a BSD-style license that can be found with this software.  *");
 		System.out.println(sep);
@@ -118,6 +123,22 @@ public class MicroejCoreValidation {
 						+ value + "' " + unit + (value > 1 ? "s" : "") + ")");
 			}
 		}
+		return value;
+	}
+
+	private static boolean getOptionAsBool(final String optionName, boolean defaultValue) {
+		final String propertyName = PROPERTY_SUFFIX + optionName;
+		String valueStr = System.getProperty(propertyName);
+		boolean value;
+
+		if (valueStr == null) {
+			value = defaultValue;
+			System.out.println("Property '" + propertyName + "' is not set (default to '" + value + "')");
+		} else {
+			value = Boolean.parseBoolean(valueStr);
+			System.out.println("Property '" + propertyName + "' is set to '" + value + "'");
+		}
+
 		return value;
 	}
 
@@ -301,13 +322,13 @@ public class MicroejCoreValidation {
 				DEFAULT_MAX_ALLOWED_CLOCK_TICK_DURATION_MS, "milliseconds");
 		long delay = 5 * 1000;
 		System.out.println("Waiting for " + delay / 1000 + "s...");
-		long timeBefore = System.currentTimeMillis();
+		long timeBefore = Util.platformTimeMillis();
 		try {
 			Thread.sleep(delay);
 		} catch (InterruptedException e) {
 			throw new Error();
 		}
-		long timeAfter = System.currentTimeMillis();
+		long timeAfter = Util.platformTimeMillis();
 		System.out.println("...done");
 		long realDelay = timeAfter - timeBefore;
 		assertTrue("realDelay>=delay", realDelay >= delay);
@@ -322,25 +343,38 @@ public class MicroejCoreValidation {
 	public void testMonotonicTime() {
 		System.out.println(
 				"-> Check monotonic time (LLMJVM_IMPL_getCurrentTime, LLMJVM_IMPL_setApplicationTime validation)...");
-		long delay = 5 * 1000;
-		long elapsedTime = 100;
-		long timeOffset = 50_000;
-		System.out.println("Waiting for " + delay / 1000 + "s...");
-		long monotonicTimeBefore = Util.platformTimeMillis();
-		long applicationTimeBefore = System.currentTimeMillis();
+		final long delay = 5 * 1000;
+		final long elapsedTime = 100;
+		final long timeOffset = 50_000;
 
-		Util.setCurrentTimeMillis(applicationTimeBefore + timeOffset);
-		long applicationTimeAfter = System.currentTimeMillis();
+		final boolean canSetSystemTime = getOptionAsBool(OPTION_CAN_SET_SYSTEM_TIME, DEFAULT_CAN_SET_SYSTEM_TIME);
+
+		if (canSetSystemTime) {
+			System.out.println("Setting application time...");
+			final long applicationTimeBefore = System.currentTimeMillis();
+
+			Util.setCurrentTimeMillis(applicationTimeBefore + timeOffset);
+
+			final long applicationTimeAfter = System.currentTimeMillis();
+
+			final String assertionMessage = "Application time not correctly set. On some platforms, the MicroEJ Core Engine is not allowed to modify the time of the system (e.g., on Linux if the process does not have the right permissions). In such a case, you can ignore this test by setting the property '"
+					+ PROPERTY_SUFFIX + OPTION_CAN_SET_SYSTEM_TIME + "' to 'false'.";
+			assertTrue(assertionMessage, applicationTimeAfter >= applicationTimeBefore + timeOffset
+					&& applicationTimeAfter <= applicationTimeBefore + timeOffset + elapsedTime);
+		}
+
+		System.out.println("Waiting for " + delay / 1000 + "s...");
+		final long monotonicTimeBefore = Util.platformTimeMillis();
 
 		try {
 			Thread.sleep(delay);
 		} catch (InterruptedException e) {
 			throw new Error();
 		}
-		long montonicTimeAfter = Util.platformTimeMillis();
+
+		final long montonicTimeAfter = Util.platformTimeMillis();
 		System.out.println("...done");
-		assertTrue("application time not set", applicationTimeAfter >= applicationTimeBefore + timeOffset
-				&& applicationTimeAfter <= applicationTimeBefore + timeOffset + elapsedTime);
+
 		assertTrue("monotonic time not set", montonicTimeAfter >= monotonicTimeBefore + delay
 				&& montonicTimeAfter <= monotonicTimeBefore + delay + elapsedTime);
 	}

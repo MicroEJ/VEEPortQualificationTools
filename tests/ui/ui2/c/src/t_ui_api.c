@@ -1,7 +1,7 @@
 /*
  * C
  *
- * Copyright 2019-2021 MicroEJ Corp. All rights reserved.
+ * Copyright 2019-2024 MicroEJ Corp. All rights reserved.
  * Use of this source code is governed by a BSD-style license that can be found with this software.
  */
 #include <stdio.h>
@@ -67,7 +67,7 @@ static void T_UI_API_checkSize(void)
 }
 
 /*
- * Check LCD BPP (bit-per-pixel). This API is not mandatory in BSP project and required in MicroEJ Platform configuration project.
+ * Check LCD BPP (bit-per-pixel). This API is not mandatory in BSP project and required in the VEE Port configuration project.
  * This value is useful to perform some additional checks.
  */
 static void T_UI_API_checkBPP(void)

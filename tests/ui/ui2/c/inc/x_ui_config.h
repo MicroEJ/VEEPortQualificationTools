@@ -1,7 +1,7 @@
 /*
  * C
  *
- * Copyright 2019-2020 MicroEJ Corp. All rights reserved.
+ * Copyright 2019-2024 MicroEJ Corp. All rights reserved.
  * Use of this source code is governed by a BSD-style license that can be found with this software.
  */
 
@@ -26,7 +26,7 @@ extern "C" {
 
 /**
  * @brief Gets the LCD number of bits-per-pixel. This information is not required by the LLDisplay
- * implementation (already available in MicroEJ Platform) but it is highly recommended to perform
+ * implementation (already available in the VEE Port) but it is highly recommended to perform
  * some tests.
  */
 uint32_t UI_CONFIG_getBPP(void);

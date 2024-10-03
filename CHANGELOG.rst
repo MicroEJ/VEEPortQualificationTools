@@ -11,7 +11,33 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a Changelog <https://keepachangelog.com/en/1.0.0/>`_, and this project adheres to `Semantic Versioning <https://semver.org/spec/v2.0.0.html>`_.
 
 -------------------
-2.11.0 - 2024-02-22
+2.12.0 - 2024-10-03
+-------------------
+
+Added
+=======
+
+- Template files ``set_local_env.bat.tpl`` and ``set_local_env.sh.tpl`` for IAR.
+- Bash version of ``set_project_env.sh.tpl`` for IAR.
+- bat and sh run scripts using Cube Programmer.
+- MicroEJ Audio Validation (Java) 1.0.0 (see `CHANGELOG <tests/audio/java-testsuite-runner-audio/CHANGELOG.rst>`_).
+
+Changed
+=======
+
+- ``set_project_env.bat`` to allow a custom output folder name for IAR toolchain.
+- MicroEJ Core Validation (Java) 3.3.0 (see `CHANGELOG <tests/core/java-testsuite-runner-core/CHANGELOG.rst>`_).
+- MicroEJ UI Validation (Java) 1.8.0 (see `CHANGELOG <tests/ui/ui3/java-testsuite-runner-ui3/CHANGELOG.rst>`_).
+- MicroEJ VG Validation (Java) 3.0.0 (see `CHANGELOG <tests/vg/java-testsuite-runner-vg/CHANGELOG.rst>`_).
+
+Fixed
+=====
+
+- Fix include path case in embUnit sources.
+- Platform Configuration Additions 2.1.1 (see `CHANGELOG <framework/platform/content-sdk-5/build/CHANGELOG.md>`_).
+
+-------------------
+2.11.0 - 2024-02-24
 -------------------
 
 Changed
@@ -30,7 +56,7 @@ Fixed
 2.10.0 - 2023-12-05
 -------------------
 
-Added 
+Added
 =====
 
 - MicroEJ GNSS Validation (Java) 1.0.0 (see `CHANGELOG <tests/gnss/java-testsuite-runner-gnss/CHANGELOG.rst>`_).
@@ -58,7 +84,7 @@ Changed
 - Platform Configuration Additions 2.0.0 (see `CHANGELOG <framework/platform/content-sdk-5/build/CHANGELOG.md>`_).
 
 
-Added 
+Added
 =====
 
 - MicroEJ External Resource Loader Validation (Java) 1.0.0 (see `CHANGELOG <tests/ext-res-loader/java-testsuite-runner-ext-res-loader/CHANGELOG.rst>`_).
@@ -79,8 +105,8 @@ Changed
 Fixed
 =====
 
-- Fix broken links. 
-- Fix option name in ``config.properties.tpl`` files (No BSP Connection: use ``deploy.dir.microejscript`` instead of ``deploy.bsp.microejscript``). 
+- Fix broken links.
+- Fix option name in ``config.properties.tpl`` files (No BSP Connection: use ``deploy.dir.microejscript`` instead of ``deploy.bsp.microejscript``).
 
 ------------------
 2.8.0 - 2022-07-23
@@ -261,4 +287,4 @@ Added
 =====
 
 - Initial revision with CORE tests only.
-  
+

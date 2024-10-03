@@ -11,6 +11,14 @@ Relationship
 
 See `VG Readme <../README.rst>`_ to have more information about the relationship between the version of the test suite and the VG Pack.
 
+[1.3.0] - 2024-10-03
+--------------------
+
+Changed
+~~~~~~~
+
+- VG Test Suite 3.0.0 (compatibility with VG Pack 1.6.0).
+
 [1.2.0] - 2024-02-15
 --------------------
 

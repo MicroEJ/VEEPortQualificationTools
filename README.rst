@@ -113,6 +113,13 @@ The External Resource Loader Test Suite is a Java Test Suite.
 
 See `External Resource Loader Readme <tests/ext-res-loader/README.rst>`_
 
+Audio Test Suite
+----------------
+
+The Audio Test Suite is a Java Test Suite.
+
+See `Audio Readme <tests/audio/README.rst>`_
+
 VEE Port Qualification Tools Overview
 =====================================
 

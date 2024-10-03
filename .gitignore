@@ -1,0 +1,4 @@
+docs/
+**/CoreMarkport/
+tests/core/java-testsuite-runner-core/launchers/java-testsuite-runner-core.launch.properties
+tests/ui/ui3/java-testsuite-runner-ui3/launchers/java-testsuite-runner-ui3.launch.properties

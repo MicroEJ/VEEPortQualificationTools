@@ -1,7 +1,7 @@
 /*
  * C
  *
- * Copyright 2014-2020 MicroEJ Corp. All rights reserved.
+ * Copyright 2014-2024 MicroEJ Corp. All rights reserved.
  * Use of this source code is governed by a BSD-style license that can be found with this software.
  */
 
@@ -11,7 +11,7 @@
 
 #include "../../../../framework/c/utils/inc/u_time_base.h"
 #include "../../../../framework/c/utils/inc/bsp_util.h"
-#include "../../../../framework/c/embunit/embunit/config.h"
+#include "../../../../framework/c/embunit/embUnit/config.h"
 /* Private constant declarations */
 
 

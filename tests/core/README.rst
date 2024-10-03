@@ -1,5 +1,5 @@
 .. ReStructuredText
-.. Copyright 2019-2023 MicroEJ Corp.  MicroEJ Corp. All rights reserved.
+.. Copyright 2019-2024 MicroEJ Corp.  MicroEJ Corp. All rights reserved.
 .. Use of this source code is governed by a BSD-style license that can be found with this software.
 
 **********************
@@ -85,9 +85,9 @@ Configuration
    * :code:`void UTIL_TIME_BASE_initialize()` (declared in ``u_time_base.h``) should contain any necessary initialization step required for ``UTIL_TIME_BASE_getTime`` to perform its task.
 
 #. Locate the call to ``microej_main`` in the BSP project. Include the ``t_core_main.h`` header file in this file, and add a call to the function ``T_CORE_main`` just before the call to ``microej_main``.
-#. In the MicroEJ SDK, import the MicroEJ project ``java-testsuite-runner-core`` from the folder ``tests/core``.
-#. Follow `MicroEJ Core Validation Readme <java-testsuite-runner-core/README.rst>`_ and build this MicroEJ Application against the MicroEJ Platform to qualify.
-#. Build the BSP and link it with the MicroEJ Platform runtime library and MicroEJ Application.
+#. In the SDK, import the MicroEJ project ``java-testsuite-runner-core`` from the folder ``tests/core``.
+#. Follow `MicroEJ Core Validation Readme <java-testsuite-runner-core/README.rst>`_ and build this Application against the VEE Port to qualify.
+#. Build the BSP and link it with the VEE Port runtime library and Application.
 
 Expected Results
 ----------------
@@ -231,7 +231,7 @@ Tests Description
 Print: t_core_print.c
 ---------------------
 
-An implementation of ``print`` is required by MicroEJ Platform to debug
+An implementation of ``print`` is required by the VEE Port to debug
 the Java exceptions. Furthermore this implementation is also required to
 check this qualification bundle.
 
@@ -262,10 +262,10 @@ A message is just printed:
 Timer: t_core_time_base.c
 -------------------------
 
-A time counter is required by MicroEJ Platform. This timer must respect
+A time counter is required by the VEE Port. This timer must respect
 the following rules:
 
-* during MicroEJ Application, this counter must not return to zero
+* during the execution of the Application, this counter must not return to zero
   (return in the past),
 * its precision must be around one or ten microseconds (often running
   at 1MHz).
@@ -339,7 +339,7 @@ RAM Tests: t_core_ram.c
 This test is useful to check external RAM when it is available on the
 hardware. The test performs several read and write actions, with
 different patterns. All accesses are aligned on value to write: 8, 16 or
-32 bits, like the MicroEJ Platform will use the RAM.
+32 bits, like the VEE Port will use the RAM.
 
 To run, several functions must be implemented. See ``x_ram_checks.h``:
 
@@ -395,7 +395,7 @@ any other regions.
 **Notes**
 
 These results can be sent to MicroEJ in order to compare the BSP
-implementation with all others MicroEJ Platforms.
+implementation with all others VEE Ports.
 
 Coremark: t_core_core_benchmark.c
 ---------------------------------
@@ -439,14 +439,14 @@ To run this test:
 MicroEJ Core Validation
 -----------------------
 
-This MicroEJ Application validates the LLAPI ``LLMJVM_impl.h``
+This Application validates the LLAPI ``LLMJVM_impl.h``
 implementation executing several tests. Two first tests check the time,
 and require an human check to be sure the time is correct.
 
 **Configuration**
 
-In the MicroEJ SDK, import the MicroEJ project `java-testsuite-runner-core <./java-testsuite-runner-core/>`_ from the folder ``tests/core``.
-Follow the MicroEJ Core Validation `README <./java-testsuite-runner-core/README.rst>`_ to build and link this MicroEJ Application against the MicroEJ Platform to qualify.
+In the SDK, import the MicroEJ project `java-testsuite-runner-core <./java-testsuite-runner-core/>`_ from the folder ``tests/core``.
+Follow the MicroEJ Core Validation `README <./java-testsuite-runner-core/README.rst>`_ to build and link this Application against the VEE Port to qualify.
 
 **Expected results**
 

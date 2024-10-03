@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.1] - 2024-04-05
+
+- `[Architecture 7.x]` Fix build and run Linux scripts end-of-line (EOL) characters if the VEE port was built on Windows with Partial BSP Connection and silently skipped if the VEE port has no configured BSP Connection.
+
 ## [2.1.0] - 2023-12-05
 
 This version requires SDK `5.8.0` or higher.
@@ -24,8 +28,8 @@ This version requires SDK `5.8.0` or higher.
 ### Fixed
 
 - Fix execution of artifact checker on `-configuration` project instead of `-fp` project.
-- Fix build and run Linux scripts end-of-line (EOL) characters if the VEE port was built on Windows.
 - Fix update in some cases of The _Multi Applications_ (`kf`) module in the `.platform` file (only when `com.microej.platformbuilder.module.multi.enabled` was set to `true`).
+- `[Architecture 7.x]` Fix build and run Linux scripts end-of-line (EOL) characters if the VEE port was built on Windows and configured with Full BSP Connection.
 
 ## [2.0.0] - [2023-06-29]
 
@@ -103,5 +107,5 @@ This version requires SDK `5.8.0` or higher.
   - Initial version with scripts for BSP connection.
   
 ---
-_Copyright 2020-2023 MicroEJ Corp. All rights reserved._
+_Copyright 2020-2024 MicroEJ Corp. All rights reserved._
 _Use of this source code is governed by a BSD-style license that can be found with this software._

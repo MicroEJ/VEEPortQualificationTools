@@ -2,7 +2,7 @@
 <!-- 
 	ANT
 	
-	Copyright 2015-2023 MicroEJ Corp. All rights reserved.
+	Copyright 2015-2024 MicroEJ Corp. All rights reserved.
 	Use of this source code is governed by a BSD-style license that can be found with this software.
 -->
 
@@ -196,14 +196,12 @@
 		
 	</target>
 
-        <!--
-                Convert .sh files to Unix-style line endings.
-        -->
-        <target name="deployInBSP:convert:scripts:dir" extensionOf="deployInBSP:copy:custom">
-                <fixcrlf srcdir="${deploy.bsp.root.dir.computed}/${deploy.bsp.microejscript.relative.dir}" includes="*.sh" eol="unix" />
-        </target>
+	<target name="deployInBSP:exec:script:dir" extensionOf="deployInBSP:copy:custom" depends="deployInBSP:copy:app:dir,deployInBSP:copy:lib:dir,deployInBSP:copy:inc:dir" if="deploy.bsp.microejscript.dir">
+		<!--
+			Convert .sh files to Unix-style line endings.
+		-->
+		<fixcrlf srcdir="${deploy.bsp.microejscript.dir}" includes="*.sh" eol="unix" />
 
-	<target name="deployInBSP:exec:script:dir" extensionOf="deployInBSP:copy:custom" depends="deployInBSP:copy:app:dir,deployInBSP:copy:lib:dir,deployInBSP:copy:inc:dir,deployInBSP:convert:scripts:dir" if="deploy.bsp.microejscript.dir">
 		<property name="deploy.bsp.microejscript.name" value="build"/>
 		<condition property="deploy.bsp.microejscript.extension" value="bat" else="sh">
 			<os family="windows"/>

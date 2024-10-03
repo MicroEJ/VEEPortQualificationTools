@@ -1,15 +1,15 @@
 .. ReStructuredText
-.. Copyright 2019-2023 MicroEJ Corp.  MicroEJ Corp. All rights reserved.
+.. Copyright 2019-2024 MicroEJ Corp.  MicroEJ Corp. All rights reserved.
 .. Use of this source code is governed by a BSD-style license that can be found with this software.
 
 ***********************************
 Graphical User Interface Test Suite
 ***********************************
 
-This folder contains a ready-to-use project for testing the `Graphical User Interface <https://docs.microej.com/en/latest/PlatformDeveloperGuide/ui.html>`_ implementation on a device.
+This folder contains a ready-to-use project for testing the `Graphical User Interface <https://docs.microej.com/en/latest/VEEPortingGuide/ui.html>`_ implementation on a device.
 This Test Suite will check the drivers and implementation of LLAPI ``LLDisplay``.
 
-**Note**: These tests only concern the MicroEJ Platforms made against the MicroEJ UI Packs [6.0.0-13.0.0[ (13.0.0 excluded). For the newer MicroEJ UI packs, see `UI3 Readme <../ui3/README.rst>`_ .
+**Note**: These tests only concern the VEE Ports made against the MicroEJ UI Packs [6.0.0-13.0.0[ (13.0.0 excluded). For the newer MicroEJ UI packs, see `UI3 Readme <../ui3/README.rst>`_ .
 
 Additionally, the `Tool-Java-Touch <https://github.com/MicroEJ/Tool-Java-Touch>`_ project
 allows to test the correct behavior of MicroUI in a Java application. 
@@ -17,7 +17,7 @@ allows to test the correct behavior of MicroUI in a Java application.
 Requirements
 ------------
 
-- See Platform Test Suites `documentation <../../README.rst>`_.
+- See VEE Port Test Suites `documentation <../../README.rst>`_.
 - Follow the `CORE Readme <../../core/README.rst>`_.
 
 Usage
@@ -39,9 +39,9 @@ Usage
 
 #. Add a call to the function ``T_UI_main()`` just before the call to
    ``microej_main()``.
-#. In the MicroEJ SDK, import the MicroEJ project ``java-testsuite-runner-core`` from the folder ``tests/core/java``.
-#. Build this MicroEJ Application against the MicroEJ Platform to qualify.
-#. Build the BSP and link it with the MicroEJ Platform runtime library and MicroEJ Application.
+#. In the SDK, import the MicroEJ project ``java-testsuite-runner-core`` from the folder ``tests/core/java``.
+#. Build this Application against the VEE Port to qualify.
+#. Build the BSP and link it with the Architecture runtime library (``microejruntime.a``) and the Application (``microejapp.o``).
 
 Expected Results
 ++++++++++++++++
@@ -88,9 +88,9 @@ sequence is performed in new back buffer.
 **Configuration**
 
 ``LLDisplay`` implementation is written to target a LCD with a specific
-BPP (bits-per-pixel). This value is also available in MicroEJ Platform
-Configuration project in order to build a MicroEJ Platform with the corresponded
-graphical engine (see ``display/display.properties``). The UI
+BPP (bits-per-pixel). This value is also available in the VEE Port
+Configuration project in order to build a VEE Port with the corresponded
+graphics engine (see ``display/display.properties``). The UI
 qualification bunble tests require this value. So a function must be
 implemented to run UI tests.
 
@@ -208,9 +208,9 @@ and one this refresh rate divided by three.
 **Notes**
 
 These results can be sent to MicroEJ in order to compare the BSP
-implementation with all others MicroEJ Platforms.
+implementation with all others VEE Ports.
 
 Troubleshooting
 ---------------
 
-See Platform Test Suites `documentation <../../README.rst>`_.
+See VEE Port Test Suites `documentation <../../README.rst>`_.

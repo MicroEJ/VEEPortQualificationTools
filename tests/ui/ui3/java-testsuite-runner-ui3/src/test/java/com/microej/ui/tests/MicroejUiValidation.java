@@ -25,7 +25,7 @@ import ej.microui.display.Painter;
  */
 public class MicroejUiValidation {
 
-	private static final String VERSION = "1.7.0";
+	private static final String VERSION = "1.8.0";
 
 	/**
 	 * Properties suffix: add "-Dcom.microej.ui.tests.xxx=xxx" in your JRE tab
@@ -280,18 +280,18 @@ public class MicroejUiValidation {
 	/**
 	 * Tests the <code>LLUI_DISPLAY_IMPL_flush</code> implementation: this function should be as fast as possible.
 	 * <p>
-	 * The "flush" consists to update the content of the display frame buffer with the content of the application buffer
-	 * (back buffer). This update may be instantaneous ("Switch" mode) or can take some time ("Copy" mode): memory copy,
-	 * serial data sent, etc. The implementation has to delegate the "flush" to another asynchronous task (hardware or
-	 * software) in order to return as soon as possible. This allows the application to do other work during this
-	 * update.
+	 * The "flush" consists to update the content of the frame buffer with the content of the back buffer. According to
+	 * the display buffer policy, this update may be instantaneous ("Swap" mode) or can take some time ("Copy" mode):
+	 * memory copy, serial data transmission, etc. The implementation has to delegate the "flush" to another
+	 * asynchronous task (hardware or software) in order to return as soon as possible. This allows the application to
+	 * do other work during this update.
 	 * <p>
 	 * The Graphics Engine has the responsability to wait the end of this asynchronous task before allowing a new
 	 * drawing in the application buffer. This waiting is automatic (first call to a drawing method after a flush is
 	 * blocker) or explicit (call to {@link Display#waitFlushCompleted()}).
 	 * <p>
-	 * The <code>LLUI_DISPLAY_impl.h</code> implementation must call <code>LLUI_DISPLAY_flushDone()</code> to unlock the
-	 * Graphics Engine.
+	 * The <code>LLUI_DISPLAY_impl.h</code> implementation must call <code>LLUI_DISPLAY_setDrawingBuffer()</code> to
+	 * unlock the Graphics Engine.
 	 * <p>
 	 * This test has no meaning on the simulator. It is automatically disabled.
 	 */
@@ -317,6 +317,9 @@ public class MicroejUiValidation {
 			// draw in all back buffer
 			g.setColor(Colors.WHITE);
 			Painter.fillRectangle(g, 0, 0, displayWidth, displayHeight);
+
+			// wait the end of potential asynchronous "fillRect"
+			Painter.writePixel(g, 0, 0);
 
 			long t0 = System.currentTimeMillis();
 			display.flush();
